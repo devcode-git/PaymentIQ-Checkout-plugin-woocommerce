@@ -1,0 +1,39 @@
+.woocommerce-checkout, #customer_details {
+  width: 100%;
+}
+
+#piq-checkout-wrapper {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column-reverse;
+}
+
+#piq-checkout {
+  transition: opacity .1s ease-in;
+  opacity: 1;
+  transition-delay: 1.6s;
+  width: 100%;
+  overflow: hidden;
+  margin-right: 20px;
+  min-width: 500px;
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.woocommerce-checkout-review-order-table {
+  min-width: 400px;
+  max-width: 650px;
+  margin: 0 auto 20px auto;
+  width: 100%;
+}
+
+@media (max-width: 700px) {
+  #piq-checkout, .woocommerce-checkout-review-order-table {
+    max-width: 100%;
+    width: 100%;
+    min-width: auto;
+    margin: 0px;
+    overflow: visible;
+  }
+}
