@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ssolders/PaymentIQ-Checkout-Woocommerce.git"
+    "url": "git+https://github.com/devcode-git/PaymentIQ-Checkout-Plugin-Woocommerce.git"
   },
   "keywords": [
     "Payments",
@@ -21,9 +21,9 @@
   "author": "simon.solders@devcode.se",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ssolders/PaymentIQ-Checkout-Woocommerce/issues"
+    "url": "https://github.com/devcode-git/PaymentIQ-Checkout-Plugin-Woocommerce/issues"
   },
-  "homepage": "https://github.com/ssolders/PaymentIQ-Checkout-Woocommerce#readme",
+  "homepage": "https://github.com/devcode-git/PaymentIQ-Checkout-Plugin-Woocommerce/blob/main/README.md",
   "babel": {
     "presets": [
       "@babel/preset-env"
