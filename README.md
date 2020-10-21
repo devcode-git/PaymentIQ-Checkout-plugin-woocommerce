@@ -1,0 +1,1 @@
+# PaymentIQ-Checkout-Plugin-Woocommerce
