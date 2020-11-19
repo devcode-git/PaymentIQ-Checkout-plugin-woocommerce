@@ -136,15 +136,22 @@ class Piq_Co_Admin_Api {
 
       $piqTxId =  array_key_exists( 'transaction_id', $order ) ? $order['transaction_id'] : false;
 
-      if ( !$piqTxId || $piqTxId == '' ) {
+      // If the order has been captured - PIQ has created a separate capture transaction
+      // If a refund is to be made - the refund is done on the capture transaction, not the original transaction
+      // SO: When doing a refund - first check if we have a piq_capture_tx_id, if we do, use that, otherwise use the orignal tx id
+      $piq_capture_tx_id = wc_get_order( $order_id )->get_meta('piq_capture_tx_id');
+
+      if ( (!$piqTxId || $piqTxId == '') && (!$piq_capture_tx_id || $piq_capture_tx_id == '' ) ) {
         return new \WP_Error( 'paymentiq_checkout_error', 'Refund failed - No PIQ transaction id found');
       }
 
       $piqMerchantId = PIQ_CHECKOUT_WC()->merchantId;
 
+      $transactionId = $piq_capture_tx_id ? $piq_capture_tx_id : $piqTxId;
+
       $baseUrl = $this->getEnvironmentBaseUrl();
       $endpoint = '/paymentiq/admin/v1/payments/refund/';
-      $refundUrl = $baseUrl . $endpoint . $piqTxId . '?merchantId=' . $piqMerchantId;
+      $refundUrl = $baseUrl . $endpoint . $transactionId . '?merchantId=' . $piqMerchantId;
 
       $data = array();
       $data['info'] = $note;
@@ -225,6 +232,10 @@ class Piq_Co_Admin_Api {
             
             // Set a meta field with captured amount / already captured amount + new amount
             update_post_meta($order_id, 'piq_captured_amount', $total_captured_amount);
+            
+            // save the txId of the capture on the order - we need this when we want to make a refund
+            $piq_capture_tx_id = $parsedResult['id'];
+            update_post_meta($order_id, 'piq_capture_tx_id', $piq_capture_tx_id);
             return true;
 
           } catch (Exception $e) {

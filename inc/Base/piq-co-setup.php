@@ -50,8 +50,8 @@ class Piq_Co_Setup {
           'description' => 'The description of the payment method displayed to the customers.',
           'default' => 'Pay using PaymentIQ Checkout'
       ),
-      'merchantId' => array(
-        'title' => 'Merchant ID',
+      'piqMerchantId' => array(
+        'title' => 'PaymentIQ Merchant ID',
         'type' => 'text',
         'description' => 'The id identifying your PaymentIQ merchant account.',
         'default' => ''
@@ -121,7 +121,13 @@ class Piq_Co_Setup {
         'type' => 'checkbox',
         'description' => 'When this is enabled the full payment will be captured when the order status changes to Completed. If not enabled, manual capture is available in the order details.',
         'default' => 'no'
-      )
+      ),
+      'piqButtonsColor' => array(
+        'title' => 'PaymentIQ Checkout Buttons color',
+        'type' => 'text',
+        'description' => 'Hex code of buttons',
+        'default' => '#9c72b6'
+      ),
     );
   }
 

@@ -46,3 +46,7 @@
 	background-color: #fff;
 	box-shadow: 0 5px 4px -2px rgba(0, 0, 0, 0.15);
 }
+
+#woocommerce-order-items .wc-order-totals .captured-total {
+	color: #13ab3b;
+}

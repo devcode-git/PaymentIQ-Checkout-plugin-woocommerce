@@ -105,11 +105,12 @@ function initPIQCheckout () {
       $this->method_description = 'PaymentIQ Checkout allows safe and simple inline payments in your shop'; // displayed in Woocommerce/Settings/Payments
       $this->icon = WP_PLUGIN_URL . '/' . plugin_basename( dirname( __FILE__ ) ) . '/bambora-logo.svg';
       $this->has_fields = false;
-      $this->PIQ_MID = $this->get_option( 'merchantId' );
+      $this->piqMerchantId = $this->get_option( 'piqMerchantId' );
       $this->didClientId = $this->get_option( 'didClientId' );
       $this->piqCountry = strval($this->get_option( 'piqCountry' ));
       $this->piqLocale = strval($this->get_option( 'piqLocale' ));
       $this->piqEnvironment = strval($this->get_option( 'piqEnvironment' ));
+      $this->piqButtonsColor = strval($this->get_option( 'piqButtonsColor' ));
       $this->rememberUserDevice = strval($this->get_option( 'rememberUserDevice' ));
       $this->captureOnStatusComplete = strval($this->get_option( 'captureOnStatusComplete' ));
       $this->PIQ_TOTAL_AMOUNT = null;
@@ -201,6 +202,10 @@ function initPIQCheckout () {
       if( is_admin() ) {
         add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
         
+        add_action( 'add_meta_boxes', array( $this, 'paymentiq_checkout_meta_boxes' ) );
+        
+        add_action( 'woocommerce_admin_order_totals_after_total', array( $this, 'paymentiq_checkout_edit_order_after_refunds' ) );
+
         /* Inject manual action buttons in the admin panel in order details */
         add_action('woocommerce_order_item_add_action_buttons', array( $this, 'paymentiq_checkout_render_custom_order_action_buttons' ) );
 
@@ -265,6 +270,108 @@ function initPIQCheckout () {
       $fields[ 'billing' ] = array();
       $fields[ 'shipping' ] = array();
       return $fields;
+    }
+
+    public function paymentiq_checkout_meta_boxes() {
+      global $post;
+      $order_id = $post->ID;
+      if( !$this->module_check( $order_id ) ) {
+          return;
+      }
+
+      add_meta_box(
+          'paymentiq-checkout-payment-actions',
+          __( 'PaymentIQ Checkout', 'paymentiq-checkout' ),
+          array( &$this, 'paymentiq_checkout_meta_box_payment' ),
+          'shop_order',
+          'side',
+          'high'
+      );
+    }
+
+    public function paymentiq_checkout_meta_box_payment() {
+      global $post;
+      $order_id = $post->ID;
+      $order = wc_get_order( $order_id );
+      if ( !empty( $order ) ) {
+        $captured_amount = $order->get_meta('piq_captured_amount');
+        
+        $j_order = json_decode(wc_get_order( $order_id ), true);
+        $piqTxId = array_key_exists( 'transaction_id', $j_order ) ? $j_order['transaction_id'] : false;
+
+        $piqPsp = $order->get_meta('piq_tx_psp');
+        $piqTxType = $order->get_meta('piq_tx_type');
+        $$piq_capture_id = $order->get_meta('piq_capture_tx_id');
+
+        $html = '<div class="paymentiq-checkoutinfo">';
+        
+        if ($piqTxId && $piqTxId !== '') {
+          $html .= '<div class="paymentiq-checkout-id">';
+          $html .= '<p><b>' . __( 'Transaction ID', 'paymentiq-checkout' ) . '</b>: ' . $piqTxId . '</p>';
+          $html .= '</div>';
+        }
+        
+        $html .= '<div class="paymentiq-checkout-psp">';
+        $html .= '<p><b>' . __( 'Payment Type', 'paymentiq-checkout' ) . '</b>: ' . $piqPsp . '</p>';
+        $html .= '</div>';
+        
+        $html .= '<div class="paymentiq-checkout-tx-type">';
+        $html .= '<p><b>' . __( 'Payment Tx type', 'paymentiq-checkout' ) . '</b>: ' . $piqTxType . '</p>';
+        $html .= '</div>';
+
+        /*
+        $html .= '<div class="bambora_info_overview">';
+        $html .= '<p>' . __( 'Authorized:', 'bambora-online-checkout' ) . '</p>';
+        $html .= '<p>' . wc_format_localized_price( $total_authorized ) . ' ' . $curency_code . '</p>';
+        $html .= '</div>';
+        */
+        if ($captured_amount && $captured_amount !== '') {
+          $html .= '<div class="paymentiq-checkout-info-overview">';
+          $html .= '<p><b>' . __( 'Captured', 'paymentiq-checkout' ) . '</b>: ' . wc_format_localized_price( $captured_amount ) . 'kr' . '</p>';
+          $html .= '</div>';
+        }
+        if ($piq_capture_id && $piq_capture_id !== '') {
+          $html .= '<div class="paymentiq-checkout-info-overview">';
+          $html .= '<p><b>' . __( 'Capture Id', 'paymentiq-checkout' ) . '</b>: ' . $piq_capture_id . '</p>';
+          $html .= '</div>';
+        }
+
+        /*
+        $html .= '<div class="bambora_info_overview">';
+        $html .= '<p>' . __( 'Refunded:', 'bambora-online-checkout' ) . '</p>';
+        $html .= '<p>' . wc_format_localized_price( $total_credited ) . ' ' . $curency_code . '</p>';
+        $html .= '</div>';
+        */
+
+        $html .= '</div>';
+        echo ent2ncr( $html );
+        
+          // }
+      } else {
+        $message = sprintf( __( 'Could not load the order with order id %s', 'paymentiq-checkout'), $order_id );
+        echo $message;
+      }
+      
+    }
+
+    function paymentiq_checkout_edit_order_after_refunds ( $order_id ) {
+      $order = wc_get_order( $order_id );
+      $captured_amount = $order->get_meta('piq_captured_amount');
+      if ($captured_amount) {
+        $html = '<table class="wc-order-totals updated_yet" style="border-top: 1px solid #999; margin-top:12px; padding-top:12px">
+          <div class="clear"></div>
+          <tbody>
+            <tr>
+              <td class="label captured-total">Captured:</td>
+              <td width="1%"></td>
+              <td class="total captured-total">-<span class="woocommerce-Price-amount amount"><bdi><span class="woocommerce-Price-currencySymbol">kr</span>' . wc_format_localized_price( $captured_amount ) . '</bdi></span></td>
+            </tr>
+          </tbody>
+          <div class="clear"></div>
+        </table>
+        <div class="clear"></div>';
+        echo ent2ncr( $html );
+      }
     }
 
     /*
@@ -376,6 +483,7 @@ function initPIQCheckout () {
       } else {
           $message = sprintf( __( 'The Capture action was a success for order %s', 'bambora-online-checkout' ), $order_id );
           Piq_Co_Admin_Utils::add_admin_notices(Piq_Co_Admin_Utils::SUCCESS, $message);
+          Piq_Co_Admin_Utils::echo_admin_notices();
           return $capture_result; // true if successful
       }
       return new WP_Error( 'paymentiq_checkout_error', 'Capture not yet implemented');
@@ -423,6 +531,7 @@ function initPIQCheckout () {
       } else {
           $message = sprintf( __( 'The void action was a success for order %s', 'bambora-online-checkout' ), $order_id );
           Piq_Co_Admin_Utils::add_admin_notices(Piq_Co_Admin_Utils::SUCCESS, $message);
+          Piq_Co_Admin_Utils::echo_admin_notices();
           return $void_result; // true if successful
       }
       return new WP_Error( 'paymentiq_checkout_error', 'Void not yet implemented');

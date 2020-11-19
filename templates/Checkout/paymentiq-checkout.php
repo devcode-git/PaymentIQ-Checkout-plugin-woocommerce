@@ -34,6 +34,7 @@ do_action( 'piq_co_wc_before_checkout_form' );
 					merchantId: <?php Piq_Co_Utils::getPiqMerchantId(); ?>,
 					didClientId: '<?php Piq_Co_Utils::getDidClientId(); ?>',
 					environment: '<?php strval( Piq_Co_Utils::getPiqEnvironment() ); ?>',
+					buttonsColor: '<?php strval( Piq_Co_Utils::getPiqButtonsColor() ); ?>',
 					amount: <?php Piq_Co_Utils::getPiqTotalAmount(); ?>,
 					country: '<?php strval( Piq_Co_Utils::getSelectedCountry() ); ?>',
 					locale: '<?php strval( Piq_Co_Utils::getSelectedLocale() ); ?>',

@@ -52,7 +52,7 @@ class Piq_Co_Utils {
 	/* Getter functions for variables defined in paymentiq-checkout.php plugin main class  */
 	public static function getPiqMerchantId() {
 		$instance = PIQ_CHECKOUT_WC();
-		echo PIQ_CHECKOUT_WC()->merchantId;
+		echo PIQ_CHECKOUT_WC()->piqMerchantId;
 	}
 
 	public static function getDidClientId() {
@@ -75,6 +75,11 @@ class Piq_Co_Utils {
 	public static function getPiqEnvironment() {
 		$instance = PIQ_CHECKOUT_WC();
 		echo PIQ_CHECKOUT_WC()->piqEnvironment;
+	}
+	
+	public static function getPiqButtonsColor() {
+		$instance = PIQ_CHECKOUT_WC();
+		echo PIQ_CHECKOUT_WC()->piqButtonsColor;
 	}
 
 	public static function getSelectedCountry() {

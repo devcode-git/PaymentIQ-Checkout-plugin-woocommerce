@@ -40,17 +40,21 @@ function setupCheckout (payload) {
   
   const didClientId = appConfig.didClientId
   delete appConfig.didClientId
+  
+  const buttonsColor = appConfig.buttonsColor
+  delete appConfig.buttonsColor
 
   const lookupConfig = {
     didClientId,
     country: country,
     identifyFields: 'zip,email',
-    environment: appConfig.environment.toString(),
-    checkUserDevice: checkDeviceId
+    environment: appConfig.environment,
+    checkUserDevice: checkDeviceId,
+    owner: 'Santander'
   }
-  console.log(lookupConfig)
+  
   const config = {
-    environment: appConfig.environment.toString(),
+    environment: appConfig.environment,
     "showAccounts": "inline",
     "globalSubmit": true,
     "showListHeaders": true,
@@ -62,6 +66,11 @@ function setupCheckout (payload) {
     "containerMinHeight": '600px',
     lookupConfig: {
       ...lookupConfig
+    },
+    theme: {
+      buttons: {
+        color: buttonsColor
+      }
     },
     ...appConfig
   }
