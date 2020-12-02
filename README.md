@@ -26,7 +26,7 @@ During development, `npm start` or `npm run build` will compile it for you.
 ## Deploy
 Deployment is done via Wordpress plugin's offical svn - you need a svn client
 
-Url: https://plugins.svn.wordpress.org/paymentiq-checkout__;!!KtIQeTNdMUQ6!sLkjoBGSKuzU42dsv-ZEpYionE-rl-g6wvKG3UMNoL6JCoq3fc4EMgKnKeRZEm4ROtQ$
+Url: http://plugins.svn.wordpress.org/paymentiq-checkout/
 
 You need to be a registered committer or use the paymentiq user: **devopspaymentiq**
 Want to be added as a committer? Register a user at https://wordpress.org/plugins/ and reach out to paymentiq devops or Simon Solders.
