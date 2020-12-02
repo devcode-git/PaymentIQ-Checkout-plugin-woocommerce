@@ -12,7 +12,7 @@ Wordpress/Woocommerce extension that bootstraps PaymentIQ Checkout to your websh
 
 Requires a wordpress environment with Woocommerce installed.
 
-* Setup via docker (./start.sh woocommerce-wordpress) here: https://github.com/Yoast/plugin-development-docker Requires docker 2.4 (2.5 was not working in nov 2020)
+* Setup via docker (./start.sh woocommerce-wordpress) here: https://github.com/Yoast/plugin-development-docker Requires docker desktop 2.4 (2.5 was not working in nov 2020)
 * git clone this repo into plugin-development-docker/plugins/paymentiq-checkout
 * npm start
 * start docker containers
