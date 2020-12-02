@@ -17,7 +17,7 @@ Requires a wordpress environment with Woocommerce installed.
 * npm start
 * start docker containers
 
-Php-files require no compilation. Edit the files, then just reload to get your changes.
+Php-files require no compilation. Edit the files, then just reload to see your changes.
 
 Javascript files are transpiled and minified using webpack and placed in `/assets`.
 
