@@ -117,6 +117,12 @@ class Piq_Co_Utils {
 		echo $order_key;
 	}
 
+	public static function getShippingTotal() {
+		$order = wc_get_order( PIQ_CHECKOUT_WC()->PIQ_ORDER_ID );
+		$shipping_total = $order->get_shipping_total();
+		echo $shipping_total;
+	}
+
 	public static function getOrderItems() {
 		$order = wc_get_order( PIQ_CHECKOUT_WC()->PIQ_ORDER_ID );
 		$order_items = array();
@@ -132,7 +138,7 @@ class Piq_Co_Utils {
 
 			$current_item['label'] = $name;
 			$current_item['price'] = $sub_total / $quantity; // sub_total is the price * quantity, meaning total per item. We want the price per product
-			$current_item['vat'] = $sub_tax;
+			$current_item['vat'] = $sub_tax / $quantity;
 			$current_item['quantity'] = $quantity;
 			$current_item['number'] = $number;
 

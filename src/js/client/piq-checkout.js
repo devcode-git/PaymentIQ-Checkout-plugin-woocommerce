@@ -32,6 +32,9 @@ function setupCheckout (payload) {
   orderItems = JSON.parse(orderItems) // for some reason delete payload.orderItems fails otherwise in safari
   delete appConfig.orderItems
   
+  const freightFee = appConfig.freightFee
+  delete appConfig.freightFee
+  
   const checkDeviceId = appConfig.checkUserDevice
   delete appConfig.checkUserDevice
   
@@ -92,7 +95,8 @@ function renderCheckout (config, orderItems, orderKey, orderId) {
         cashierInitLoad: () => {
           api.set({
             order: {
-              orderItems: orderItems
+              orderItems: orderItems,
+              freightFee
             }
           })
           document.getElementById('lookupIframe').scrollIntoView()

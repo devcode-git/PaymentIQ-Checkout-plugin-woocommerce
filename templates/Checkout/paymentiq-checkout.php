@@ -41,6 +41,7 @@ do_action( 'piq_co_wc_before_checkout_form' );
 					checkUserDevice: <?php Piq_Co_Utils::rememberUserDevice(); ?>,
 					orderKey: '<?php Piq_Co_Utils::getOrderKey(); ?>',
 					orderItems: '<?php Piq_Co_Utils::getOrderItems(); ?>',
+					freightFee: '<?php Piq_Co_Utils::getShippingTotal(); ?>',
 					attributes: {
 						orderId: <?php Piq_Co_Utils::getOrderId(); ?>
 					}

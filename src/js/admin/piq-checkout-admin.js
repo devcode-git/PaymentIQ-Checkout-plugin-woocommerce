@@ -17,7 +17,8 @@ function registerManualCaptureHandler() {
       return parseInt(numsStr).toFixed(2);
     }
 
-    const maxAmount = justNumbers($('.wc-order-totals .total .woocommerce-Price-amount')[0].innerText) // currency & amount (kr59 for example)
+    const orderTotalAmounts = $('.wc-order-totals .total .woocommerce-Price-amount')
+    const maxAmount = justNumbers(orderTotalAmounts[orderTotalAmounts.length - 1].innerText) // currency & amount (kr59 for example)
     let piqCapturedAmount = e.target.getAttribute("data-piq_captured_amount");
     if (!piqCapturedAmount)  {
       piqCapturedAmount = '0.00'
