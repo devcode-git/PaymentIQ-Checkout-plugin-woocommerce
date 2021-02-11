@@ -78,20 +78,22 @@ function setupCheckout (payload) {
     ...appConfig
   }
 
-  renderCheckout(config, orderItems, orderKey, orderId)
+  renderCheckout({ config, orderItems, orderKey, orderId, freightFee })
 }
 
-function renderCheckout (config, orderItems, orderKey, orderId) {
+function renderCheckout ({ config, orderItems, orderKey, orderId, freightFee }) {
   if (!_PaymentIQCashier) {
     setTimeout(function () {
-      renderCheckout(config, orderItems, orderKey, orderId)
+      renderCheckout({ config, orderItems, orderKey, orderId, freightFee })
     }, 100)
   } else {
+    // We need to keep track when the user cancels a provider flow. When that happens, we're gonna end up with the same
+    // orderId but we're gonna have a transaction in PIQ already tied to that orderId. Initiating a second transaction
+    // will cause them to get mixed up. So, when that happens, reload the page to trigger a new orderId.
+    let providerWasOpened = false
+
     new _PaymentIQCashier('#piq-checkout', config, (api) => {
       api.on({
-        lookupInitLoad: () => {
-          console.log('lookup loaded')
-        },
         cashierInitLoad: () => {
           api.set({
             order: {
@@ -105,10 +107,18 @@ function renderCheckout (config, orderItems, orderKey, orderId) {
         failure: data => notifyOrderStatus('failure', orderId, orderKey, data),
         pending: data => notifyOrderStatus('pending', orderId, orderKey, data),
         newProviderWindow: data => {
+          providerWasOpened = true
           if (data.data === 'NEW_IFRAME') {
             document.getElementById('cashierIframe').scrollIntoView()
           }
         },
+        navigate: data => {
+          if (providerWasOpened && data.data.path === '/') {
+            // user clicked back during the provider flow, meaning we end up with an orderId + an initiated transaction in PIQ
+            // In this case, we must generate a new orderId which we can do by reloading the page.
+            location.reload()
+          }
+        }
       });
     })
   }

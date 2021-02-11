@@ -301,7 +301,7 @@ function initPIQCheckout () {
 
         $piqPsp = $order->get_meta('piq_tx_psp');
         $piqTxType = $order->get_meta('piq_tx_type');
-        $$piq_capture_id = $order->get_meta('piq_capture_tx_id');
+        $piq_capture_id = $order->get_meta('piq_capture_tx_id');
 
         $html = '<div class="paymentiq-checkoutinfo">';
         
@@ -319,12 +319,6 @@ function initPIQCheckout () {
         $html .= '<p><b>' . __( 'Payment Tx type', 'paymentiq-checkout' ) . '</b>: ' . $piqTxType . '</p>';
         $html .= '</div>';
 
-        /*
-        $html .= '<div class="bambora_info_overview">';
-        $html .= '<p>' . __( 'Authorized:', 'bambora-online-checkout' ) . '</p>';
-        $html .= '<p>' . wc_format_localized_price( $total_authorized ) . ' ' . $curency_code . '</p>';
-        $html .= '</div>';
-        */
         if ($captured_amount && $captured_amount !== '') {
           $html .= '<div class="paymentiq-checkout-info-overview">';
           $html .= '<p><b>' . __( 'Captured', 'paymentiq-checkout' ) . '</b>: ' . wc_format_localized_price( $captured_amount ) . 'kr' . '</p>';
@@ -335,13 +329,6 @@ function initPIQCheckout () {
           $html .= '<p><b>' . __( 'Capture Id', 'paymentiq-checkout' ) . '</b>: ' . $piq_capture_id . '</p>';
           $html .= '</div>';
         }
-
-        /*
-        $html .= '<div class="bambora_info_overview">';
-        $html .= '<p>' . __( 'Refunded:', 'bambora-online-checkout' ) . '</p>';
-        $html .= '<p>' . wc_format_localized_price( $total_credited ) . ' ' . $curency_code . '</p>';
-        $html .= '</div>';
-        */
 
         $html .= '</div>';
         echo ent2ncr( $html );

@@ -212,7 +212,9 @@ class Piq_Co_Admin_Api {
       $json_data = wp_json_encode( $data );
       
       $result = $this->call_rest_service( $captureUrl, $json_data, self::POST );
-      if ( $result &&  json_decode($result, true) ) {
+      if ( is_wp_error( $result ) ) {
+        return $result;
+      } else if ( $result &&  json_decode($result, true) ) {
         /*
         * Depending on $result we either return true when successful capture or a WP error
         */
@@ -241,6 +243,8 @@ class Piq_Co_Admin_Api {
           } catch (Exception $e) {
             new \WP_Error( 'paymentiq_checkout_error', 'Capture successful but failed to update Woo captured amount');
           }
+        } else {
+          return new \WP_Error( 'paymentiq_checkout_error', 'Capture failed - Transaction state is not successful');
         }
 
         if ( $captureFailed ) {
@@ -248,7 +252,6 @@ class Piq_Co_Admin_Api {
           return new \WP_Error( 'paymentiq_checkout_error', $message);
         }
 
-        /* CHANGE THIS TO TRUE */
         return true;
       }
     } catch (Exception $e) {
@@ -297,6 +300,9 @@ class Piq_Co_Admin_Api {
           $message = 'PaymentIQ void failed, please contact support (txId: ' . $piqTxId . ')';
           return new \WP_Error( 'paymentiq_checkout_error', $message);
         }
+      } else {
+        // fallback to return $result and let parent deal with it
+        return $result;
       }
     } catch (Exception $e) {
       $message = 'PaymentIQ void failed, please contact support (' . $piqTxId || $order_id . ')';
@@ -342,13 +348,13 @@ class Piq_Co_Admin_Api {
       // If request returned with anything other than 200 OK
       if ( $statusCode != '200' || is_wp_error( $response ) ) {
         $error_message = wp_remote_retrieve_response_message($response);
-        throw new \Exception($error_message);
-        return new \WP_Error( 'paymentiq_checkout_error', $error_message);
+        $error_code = wp_remote_retrieve_response_code($response);
+        return new \WP_Error( 'paymentiq_checkout_error', 'PaymentIQ request failed (' . $error_code . ')' . $error_message . ' ' . $url . ' ' . $json_data);
       }
 
       return wp_remote_retrieve_body($response);
     } catch (Exception $e) {
-      $message = 'PaymentIQ http request failed, please contact support (' . $e . ')';
+      $message = 'PaymentIQ request failed, please contact support. ' . $json_data .' (' . $e . ')';
       return new \WP_Error( 'paymentiq_checkout_error', $message);
     }
   }
