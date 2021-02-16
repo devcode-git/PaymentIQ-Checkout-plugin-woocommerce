@@ -120,7 +120,8 @@ class Piq_Co_Utils {
 	public static function getShippingTotal() {
 		$order = wc_get_order( PIQ_CHECKOUT_WC()->PIQ_ORDER_ID );
 		$shipping_total = $order->get_shipping_total();
-		echo $shipping_total;
+		$shipping_tax = $order->get_shipping_tax();
+		echo $shipping_total + $shipping_tax;
 	}
 
 	public static function getOrderItems() {
