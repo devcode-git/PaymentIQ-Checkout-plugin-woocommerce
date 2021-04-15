@@ -63,6 +63,7 @@ function setupCheckout (payload) {
     "showListHeaders": true,
     "mode": "ecommerce",
     "font": 'custom,santander,santander',
+    "loaderType": "content",
     "showReceipt": false, // we redirect to order-received page right away instead
     "fetchConfig": true,
     "containerHeight": 'auto',
@@ -106,6 +107,12 @@ function renderCheckout ({ config, orderItems, orderKey, orderId, freightFee }) 
         success: data => notifyOrderStatus('success', orderId, orderKey, data),
         failure: data => notifyOrderStatus('failure', orderId, orderKey, data),
         pending: data => notifyOrderStatus('pending', orderId, orderKey, data),
+        transactionInit: data => {
+          providerWasOpened = true
+        },
+        validationFailed: data => {
+          providerWasOpened = false
+        },
         newProviderWindow: data => {
           providerWasOpened = true
           if (data.data === 'NEW_IFRAME') {

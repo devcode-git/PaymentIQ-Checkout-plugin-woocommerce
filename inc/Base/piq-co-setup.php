@@ -44,12 +44,6 @@ class Piq_Co_Setup {
           'label' => 'Enable PaymentIQ Checkout as a payment option.',
           'default' => 'yes'
       ),
-      'description' => array(
-          'title' => 'Description',
-          'type' => 'textarea',
-          'description' => 'The description of the payment method displayed to the customers.',
-          'default' => 'Pay using PaymentIQ Checkout'
-      ),
       'piqMerchantId' => array(
         'title' => 'PaymentIQ Merchant ID',
         'type' => 'text',

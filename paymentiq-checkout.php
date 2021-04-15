@@ -7,7 +7,7 @@
  Plugin Name: PaymentIQ Checkout
  Plugin URI: https://docs.paymentiq.io/
  Description: PaymentIQ Checkout for Woocommerce
- Version: 1.0.2
+ Version: 1.0.3
  Author: PaymentIQ/Bambora
  Author URI: https://www.bambora.com/payment-for-gaming/paymentiq/
  License: GPLv2 or later
@@ -102,7 +102,6 @@ function initPIQCheckout () {
     public function __construct () {
       $this->id = 'paymentiq-checkout';
       $this->method_title = 'PaymentIQ Checkout';
-      $this->method_description = 'PaymentIQ Checkout allows safe and simple inline payments in your shop'; // displayed in Woocommerce/Settings/Payments
       $this->icon = WP_PLUGIN_URL . '/' . plugin_basename( dirname( __FILE__ ) ) . '/bambora-logo.svg';
       $this->has_fields = false;
       $this->piqMerchantId = $this->get_option( 'piqMerchantId' );
