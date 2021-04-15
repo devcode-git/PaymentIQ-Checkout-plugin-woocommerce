@@ -2,13 +2,13 @@
 Contributors: Devcode/PaymentIQ/Bambora
 Tags: woocommerce, woo commerce, payment, payment gateway, gateway, paymentiq, bambora, checkout, integration, woocommerce bambora, woocommerce paymentiq checkout, psp
 Requires at least: 3.0.0
-Tested up to: 5.5.1
-Stable tag: 1.0.1
+Tested up to: 5.7.0
+Stable tag: 1.0.2
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Sourcecode: https://github.com/devcode-git/PaymentIQ-Checkout-Woocommerce
-WC requires at least: 3.0
-WC tested up to: 4.5.1
+WC requires at least: 4.0
+WC tested up to: 5.1.0
 
 Integrates PaymentIQ Checkout into your WooCommerce installation - inline
 
