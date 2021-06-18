@@ -1,11 +1,5 @@
-import { helloWorld } from './../utils'
 import _PaymentIQCashier from 'paymentiq-cashier-bootstrapper'
 
-window.addEventListener('load', function () {
-  helloWorld()
-});
-
-console.log('Register event listener')
 window.addEventListener('message', function (e) {
   if (e.data && e.data.eventType) {
     const { eventType, payload } = e.data
@@ -24,9 +18,10 @@ function setupCheckout (payload) {
     ...payload
   }
 
+  const orderReceivedPath = appConfig.orderReceivedPath
+  delete appConfig.orderReceivedPath
+
   const orderId = appConfig.attributes.orderId
-  const orderKey = appConfig.orderKey // need this to deal with the redirect to thank-you page
-  delete appConfig.orderKey
   
   let orderItems = appConfig.orderItems
   orderItems = JSON.parse(orderItems) // for some reason delete payload.orderItems fails otherwise in safari
@@ -79,13 +74,13 @@ function setupCheckout (payload) {
     ...appConfig
   }
 
-  renderCheckout({ config, orderItems, orderKey, orderId, freightFee })
+  renderCheckout({ config, orderItems, orderReceivedPath, orderId, freightFee })
 }
 
-function renderCheckout ({ config, orderItems, orderKey, orderId, freightFee }) {
+function renderCheckout ({ config, orderItems, orderReceivedPath, orderId, freightFee }) {
   if (!_PaymentIQCashier) {
     setTimeout(function () {
-      renderCheckout({ config, orderItems, orderKey, orderId, freightFee })
+      renderCheckout({ config, orderItems, orderReceivedPath, orderId, freightFee })
     }, 100)
   } else {
     // We need to keep track when the user cancels a provider flow. When that happens, we're gonna end up with the same
@@ -104,9 +99,9 @@ function renderCheckout ({ config, orderItems, orderKey, orderId, freightFee }) 
           })
           document.getElementById('lookupIframe').scrollIntoView()
         },
-        success: data => notifyOrderStatus('success', orderId, orderKey, data),
-        failure: data => notifyOrderStatus('failure', orderId, orderKey, data),
-        pending: data => notifyOrderStatus('pending', orderId, orderKey, data),
+        success: data => notifyOrderStatus('success', orderReceivedPath, orderId, data),
+        failure: data => notifyOrderStatus('failure', orderReceivedPath, orderId, data),
+        pending: data => notifyOrderStatus('pending', orderReceivedPath, orderId, data),
         transactionInit: data => {
           providerWasOpened = true
         },
@@ -134,7 +129,7 @@ function renderCheckout ({ config, orderItems, orderKey, orderId, freightFee }) 
 /* We need to give back control to the script in the php-code
    We do this via a postMessage back (templates/Checkout/paymentiq-checkout.php)
 */
-function notifyOrderStatus (status, orderId, orderKey, data) {
+function notifyOrderStatus (status, orderReceivedPath, orderId, data) {
   console.log('notifyOrderStatus')
   let payload = {}
   switch (status) {
@@ -146,7 +141,8 @@ function notifyOrderStatus (status, orderId, orderKey, data) {
           ...data
         }
       }
-      window.location.href = `/checkout/order-received/${orderId}?key=${orderKey}`
+      // Navigate to order-received page
+      window.location.href = orderReceivedPath
       break
     case 'failure':
       payload = {
@@ -156,7 +152,6 @@ function notifyOrderStatus (status, orderId, orderKey, data) {
           ...data
         }
       }
-      // window.location.href = `/checkout/order-received/${orderId}?key=${orderKey}`
       break
     case 'pending':
       payload = {
@@ -166,7 +161,8 @@ function notifyOrderStatus (status, orderId, orderKey, data) {
           ...data
         }
       }
-      window.location.href = `/checkout/order-received/${orderId}?key=${orderKey}`
+      // Navigate to order-received page
+      window.location.href = orderReceivedPath
       break
     default:
       return

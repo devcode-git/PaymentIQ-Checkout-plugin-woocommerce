@@ -7,7 +7,7 @@
  Plugin Name: PaymentIQ Checkout
  Plugin URI: https://docs.paymentiq.io/
  Description: PaymentIQ Checkout for Woocommerce
- Version: 1.0.3
+ Version: 1.0.4
  Author: PaymentIQ/Bambora
  Author URI: https://www.bambora.com/payment-for-gaming/paymentiq/
  License: GPLv2 or later
@@ -165,9 +165,16 @@ function initPIQCheckout () {
 	    @return string
     */
     public function overrideTemplate( $template, $template_name ) {
+      // echo $template_name prints out the name of every template used.
+      // by this we can identity what templates we need to make our own versions
+      // of to display our custom stuff
+      // echo $template_name;
       switch ($template_name) {
         case 'checkout/payment-method.php':
           return '';
+        case 'single-product/meta.php':
+          $template = PIQ_WC_PLUGIN_PATH . '/templates/Product/paymentiq-product-meta.php';
+          return $template;
         case 'checkout/form-checkout.php':
           $template = PIQ_WC_PLUGIN_PATH . '/templates/Checkout/paymentiq-checkout.php';
           return $template;

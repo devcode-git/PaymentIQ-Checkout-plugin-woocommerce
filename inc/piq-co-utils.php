@@ -50,6 +50,15 @@ class Piq_Co_Utils {
 	}
 
 	/* Getter functions for variables defined in paymentiq-checkout.php plugin main class  */
+	
+	public static function getOrderReceivedPath() {
+		// https://docs.woocommerce.com/document/woocommerce-endpoints-2-1/
+		$order = wc_get_order( PIQ_CHECKOUT_WC()->PIQ_ORDER_ID );
+		$order->get_checkout_payment_url( $on_checkout = false );
+		$orderReceivedPath = $order->get_checkout_order_received_url();
+		echo $orderReceivedPath;
+	}
+	
 	public static function getPiqMerchantId() {
 		$instance = PIQ_CHECKOUT_WC();
 		echo PIQ_CHECKOUT_WC()->piqMerchantId;
@@ -109,12 +118,6 @@ class Piq_Co_Utils {
 		} else {
 			throw new Exception('PaymentIQ TxRefId missing when showing receipt');
 		}
-	}
-
-	public static function getOrderKey() {
-		$order = wc_get_order( PIQ_CHECKOUT_WC()->PIQ_ORDER_ID );
-		$order_key = $order->get_order_key();
-		echo $order_key;
 	}
 
 	public static function getShippingTotal() {
