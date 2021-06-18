@@ -37,7 +37,7 @@ function constructCustomCaptureBox ($, maxAmount, piqCapturedAmount) {
   const orderActionsBar = $('.wc-order-bulk-actions');
   const parentElement = orderActionsBar[0].parentElement
 
-  maxAmount = (parseInt(maxAmount) - parseInt(piqCapturedAmount)).toFixed(2)
+  maxAmount = (Number(maxAmount) - Number(piqCapturedAmount))
 
   const markdown = `
     <script>
