@@ -14,7 +14,7 @@ function registerManualCaptureHandler() {
 
     function justNumbers(string) {
       var numsStr = string.replace(/[^0-9.]/g,'');
-      return parseInt(numsStr).toFixed(2);
+      return Number(numsStr).toFixed(2)
     }
 
     const orderTotalAmounts = $('.wc-order-totals .total .woocommerce-Price-amount')
@@ -37,7 +37,7 @@ function constructCustomCaptureBox ($, maxAmount, piqCapturedAmount) {
   const orderActionsBar = $('.wc-order-bulk-actions');
   const parentElement = orderActionsBar[0].parentElement
 
-  maxAmount = (Number(maxAmount) - Number(piqCapturedAmount))
+  maxAmount = (Number(maxAmount) - Number(piqCapturedAmount)).toFixed(2)
 
   const markdown = `
     <script>
