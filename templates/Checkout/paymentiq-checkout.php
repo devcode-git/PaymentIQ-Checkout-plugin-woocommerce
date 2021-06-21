@@ -31,6 +31,7 @@ do_action( 'piq_co_wc_before_checkout_form' );
 			window.postMessage({
 				eventType: '::wooCommerceSetupPIQCheckout',
 				payload: {
+					orderReceivedPath: '<?php Piq_Co_Utils::getOrderReceivedPath(); ?>',
 					merchantId: <?php Piq_Co_Utils::getPiqMerchantId(); ?>,
 					didClientId: '<?php Piq_Co_Utils::getDidClientId(); ?>',
 					environment: '<?php strval( Piq_Co_Utils::getPiqEnvironment() ); ?>',
@@ -39,7 +40,6 @@ do_action( 'piq_co_wc_before_checkout_form' );
 					country: '<?php strval( Piq_Co_Utils::getSelectedCountry() ); ?>',
 					locale: '<?php strval( Piq_Co_Utils::getSelectedLocale() ); ?>',
 					checkUserDevice: <?php Piq_Co_Utils::rememberUserDevice(); ?>,
-					orderKey: '<?php Piq_Co_Utils::getOrderKey(); ?>',
 					orderItems: '<?php Piq_Co_Utils::getOrderItems(); ?>',
 					freightFee: '<?php Piq_Co_Utils::getShippingTotal(); ?>',
 					attributes: {
