@@ -25,13 +25,20 @@ global $product;
 <div class="product_meta">
   
   <!-- PaymentIQ Developed Widget -->
-  <div id='santander-checkout-widget' style='height="600px; border: 1px solid red;"'></div>
+  <div id='santander-checkout-widget'></div>
   <script>
     const checkout_widget = new window.SANTANDER_CHECKOUT_WIDGET(
       'santander-checkout-widget',
       {
+        mode: 'modern',
         environment: 'production',
-        heightWithDropdown: '250px'
+        iframeHeight: '250px',
+        theme: {
+          raised: 0
+        },
+        paymentDetails: {
+          loanAmount: 49
+        }
       }
     );
   </script>
