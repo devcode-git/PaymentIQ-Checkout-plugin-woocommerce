@@ -22,6 +22,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 global $product;
 ?>
 
+<!-- If amount is bigger than 1990 NOK and the setting is turned on. -->
+<?php if(true) : ?>
+
 <div class="product_meta">
   
   <!-- PaymentIQ Developed Widget -->
@@ -43,6 +46,7 @@ global $product;
     );
   </script>
 
+
   <!-- END PaymentIQ Developed Widget -->
 
 	<?php do_action( 'woocommerce_product_meta_start' ); ?>
@@ -60,3 +64,5 @@ global $product;
 	<?php do_action( 'woocommerce_product_meta_end' ); ?>
 
 </div>
+
+<?php endif; ?>
