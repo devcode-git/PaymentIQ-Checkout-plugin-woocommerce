@@ -122,6 +122,12 @@ class Piq_Co_Setup {
         'description' => 'Hex code of buttons',
         'default' => '#9c72b6'
       ),
+      'calculatorWidget' => array(
+        'title' => 'Calculator widget',
+        'type' => 'checkbox',
+        'description' => 'Display a calculator widget at product page',
+        'default' => 'yes'
+      ),
     );
   }
 

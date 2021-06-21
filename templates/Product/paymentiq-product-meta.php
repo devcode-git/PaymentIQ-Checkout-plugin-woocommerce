@@ -23,7 +23,7 @@ global $product;
 ?>
 
 <!-- If amount is bigger than 1990 NOK and the setting is turned on. -->
-<?php if(true) : ?>
+<?php if(PIQ_CHECKOUT_WC()->calculatorWidget === 'yes') : ?>
 
 <div class="product_meta">
   
