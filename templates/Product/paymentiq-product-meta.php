@@ -27,10 +27,11 @@ global $product;
 require_once('/var/www/html/wp-content/plugins/PaymentIQ-Checkout-Plugin-Woocommerce/inc/piq-co-utils.php');
 $Piq_Co_Utils = new Piq_Co_Utils();
 $calculatorWidget = $Piq_Co_Utils->getCalculatorWidget();
-$price = $product->get_price();
+$price = intval($product->get_price());
+$minPrice = 1990;
 ?>
 
-<?php if($calculatorWidget) : ?>
+<?php if($calculatorWidget && $price >= $minPrice) : ?>
 
 <div class="product_meta">
   
@@ -47,7 +48,7 @@ $price = $product->get_price();
           raised: 0
         },
         paymentDetails: {
-          loanAmount: <?php echo intval($price) ?>
+          loanAmount: <?php echo $price ?>
         }
       }
     );
