@@ -27,6 +27,7 @@ global $product;
 require_once('/var/www/html/wp-content/plugins/PaymentIQ-Checkout-Plugin-Woocommerce/inc/piq-co-utils.php');
 $Piq_Co_Utils = new Piq_Co_Utils();
 $calculatorWidget = $Piq_Co_Utils->getCalculatorWidget();
+$price = $product->get_price();
 ?>
 
 <?php if($calculatorWidget) : ?>
@@ -46,7 +47,7 @@ $calculatorWidget = $Piq_Co_Utils->getCalculatorWidget();
           raised: 0
         },
         paymentDetails: {
-          loanAmount: 49
+          loanAmount: <?php echo intval($price) ?>
         }
       }
     );
