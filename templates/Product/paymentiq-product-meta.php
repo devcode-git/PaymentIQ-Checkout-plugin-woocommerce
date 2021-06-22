@@ -29,6 +29,7 @@ $Piq_Co_Utils = new Piq_Co_Utils();
 $calculatorWidget = $Piq_Co_Utils->getCalculatorWidget();
 $price = intval($product->get_price());
 $minPrice = 1990;
+// echo $product; // echo this one to see product data
 ?>
 
 <?php if($calculatorWidget && $price >= $minPrice) : ?>
