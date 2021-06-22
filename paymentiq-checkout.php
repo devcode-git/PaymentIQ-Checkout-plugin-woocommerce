@@ -112,6 +112,7 @@ function initPIQCheckout () {
       $this->piqButtonsColor = strval($this->get_option( 'piqButtonsColor' ));
       $this->rememberUserDevice = strval($this->get_option( 'rememberUserDevice' ));
       $this->captureOnStatusComplete = strval($this->get_option( 'captureOnStatusComplete' ));
+      $this->calculatorWidget = strval($this->get_option( 'calculatorWidget' ));
       $this->PIQ_TOTAL_AMOUNT = null;
       $this->PIQ_ORDER_ID = null;
 

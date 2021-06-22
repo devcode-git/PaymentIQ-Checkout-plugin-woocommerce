@@ -120,7 +120,7 @@ class Piq_Co_Setup {
         'title' => 'PaymentIQ Checkout Buttons color',
         'type' => 'text',
         'description' => 'Hex code of buttons',
-        'default' => '#9c72b6'
+        'default' => '#9C72BC'
       ),
       'calculatorWidget' => array(
         'title' => 'Calculator widget',

@@ -23,7 +23,13 @@ global $product;
 ?>
 
 <!-- If amount is bigger than 1990 NOK and the setting is turned on. -->
-<?php if(PIQ_CHECKOUT_WC()->calculatorWidget === 'yes') : ?>
+<?php
+require_once('/var/www/html/wp-content/plugins/PaymentIQ-Checkout-Plugin-Woocommerce/inc/piq-co-utils.php');
+$Piq_Co_Utils = new Piq_Co_Utils();
+$calculatorWidget = $Piq_Co_Utils->getCalculatorWidget();
+?>
+
+<?php if($calculatorWidget) : ?>
 
 <div class="product_meta">
   

@@ -85,6 +85,16 @@ class Piq_Co_Utils {
 		$instance = PIQ_CHECKOUT_WC();
 		echo PIQ_CHECKOUT_WC()->piqEnvironment;
 	}
+
+	public static function getCalculatorWidget() {
+		$instance = PIQ_CHECKOUT_WC();
+		$calculatorWidget = PIQ_CHECKOUT_WC()->calculatorWidget;
+		if ($calculatorWidget == '' || $calculatorWidget == 'yes') {
+			return true;
+		} else {
+			return false;
+		}
+	}
 	
 	public static function getPiqButtonsColor() {
 		$instance = PIQ_CHECKOUT_WC();

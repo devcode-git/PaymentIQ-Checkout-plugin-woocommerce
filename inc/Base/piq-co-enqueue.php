@@ -26,6 +26,6 @@
   function enqueueAssets () {
     wp_enqueue_style( 'piqCheckoutScript', plugin_dir_url( __FILE__ ) . '../../assets/styles/piq-checkout-styles.css' );
     wp_enqueue_script( 'piqCheckoutScript', plugin_dir_url( __FILE__ ) . '../../assets/scripts/piq-checkout-client.js' );
-    wp_enqueue_script( 'santander-widget', 'https://hakkespro.github.io/statics/santander-checkout-front-api/dist/main.js', false );
+    wp_enqueue_script( 'santander-widget', 'https://hakkespro.github.io/statics/santander-checkout-front-api/dist/main.js?v=1.2', false );
   }
  }
