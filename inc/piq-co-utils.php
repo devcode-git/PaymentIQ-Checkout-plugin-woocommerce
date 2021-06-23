@@ -85,16 +85,6 @@ class Piq_Co_Utils {
 		$instance = PIQ_CHECKOUT_WC();
 		echo PIQ_CHECKOUT_WC()->piqEnvironment;
 	}
-
-	public static function getCalculatorWidget() {
-		$instance = PIQ_CHECKOUT_WC();
-		$calculatorWidget = PIQ_CHECKOUT_WC()->calculatorWidget;
-		if ($calculatorWidget == '' || $calculatorWidget == 'yes') {
-			return true;
-		} else {
-			return false;
-		}
-	}
 	
 	public static function getPiqButtonsColor() {
 		$instance = PIQ_CHECKOUT_WC();
@@ -166,6 +156,71 @@ class Piq_Co_Utils {
 	public static function updateOrderStatus ( $status ) {
 		// call an action hook that main class reacts to
 		do_action( 'piq_co_update_order_status', $status );
+	}
+
+	// Calculator widget options
+	public static function getCalculatorWidget() {
+		$instance = PIQ_CHECKOUT_WC();
+		$calculatorWidget = PIQ_CHECKOUT_WC()->calculatorWidget;
+		if ($calculatorWidget == '' || $calculatorWidget == 'yes') {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public static function getCalculatorMode() {
+		$instance = PIQ_CHECKOUT_WC();
+		$calculatorMode = PIQ_CHECKOUT_WC()->calculatorMode;
+		if ($calculatorMode == '') {
+			return 'modern';
+		}
+		return $calculatorMode;
+	}
+
+	public static function getCalculatorBackground() {
+		$instance = PIQ_CHECKOUT_WC();
+		$calculatorBackground = PIQ_CHECKOUT_WC()->calculatorBackground;
+		if ($calculatorBackground == '') {
+			return '#f8f8f8';
+		}
+		return $calculatorBackground;
+	}
+
+	public static function getCalculatorBorderColor() {
+		$instance = PIQ_CHECKOUT_WC();
+		$calculatorBorderColor = PIQ_CHECKOUT_WC()->calculatorBorderColor;
+		if ($calculatorBorderColor == '') {
+			return '#cacaca';
+		}
+		return $calculatorBorderColor;
+	}
+
+	public static function getCalculatorTextColor() {
+		$instance = PIQ_CHECKOUT_WC();
+		$calculatorTextColor = PIQ_CHECKOUT_WC()->calculatorTextColor;
+		if ($calculatorTextColor == '') {
+			return '#333333';
+		}
+		return $calculatorTextColor;
+	}
+
+	public static function getCalculatorBorderRadius() {
+		$instance = PIQ_CHECKOUT_WC();
+		$calculatorBorderRadius = PIQ_CHECKOUT_WC()->calculatorBorderRadius;
+		if ($calculatorBorderRadius == '') {
+			return '4px';
+		}
+		return $calculatorBorderRadius;
+	}
+
+	public static function getCalculatorRaised() {
+		$instance = PIQ_CHECKOUT_WC();
+		$calculatorRaised = PIQ_CHECKOUT_WC()->calculatorRaised;
+		if ($calculatorRaised == '') {
+			return 0;
+		}
+		return $calculatorRaised;
 	}
 
  } //end of class

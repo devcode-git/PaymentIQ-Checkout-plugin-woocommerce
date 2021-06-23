@@ -22,13 +22,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 global $product;
 ?>
 
-<!-- If amount is bigger than 1990 NOK and the setting is turned on. -->
+
 <?php
 require_once('/var/www/html/wp-content/plugins/PaymentIQ-Checkout-Plugin-Woocommerce/inc/piq-co-utils.php');
 $Piq_Co_Utils = new Piq_Co_Utils();
 $calculatorWidget = $Piq_Co_Utils->getCalculatorWidget();
 $price = intval($product->get_price());
-$minPrice = 1990;
+$minPrice = 1990; // If amount is bigger than 1990 NOK and the setting is turned on.
 // echo $product; // echo this one to see product data
 ?>
 
@@ -42,11 +42,15 @@ $minPrice = 1990;
     const checkout_widget = new window.SANTANDER_CHECKOUT_WIDGET(
       'santander-checkout-widget',
       {
-        mode: 'modern',
+        mode: '<?php echo $Piq_Co_Utils->getCalculatorMode(); ?>',
         environment: 'production',
         iframeHeight: '250px',
         theme: {
-          raised: 0
+          raised: '<?php echo intval($Piq_Co_Utils->getCalculatorRaised()); ?>',
+          background: '<?php echo $Piq_Co_Utils->getCalculatorBackground(); ?>',
+          border: '<?php echo $Piq_Co_Utils->getCalculatorBorderColor(); ?>',
+          text: '<?php echo $Piq_Co_Utils->getCalculatorTextColor(); ?>',
+          borderRadius: '<?php echo $Piq_Co_Utils->getCalculatorBorderRadius(); ?>',
         },
         paymentDetails: {
           loanAmount: <?php echo $price ?>
