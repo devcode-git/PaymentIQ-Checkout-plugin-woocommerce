@@ -20,10 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 global $product;
-?>
 
-
-<?php
 require_once('/var/www/html/wp-content/plugins/PaymentIQ-Checkout-Plugin-Woocommerce/inc/piq-co-utils.php');
 $Piq_Co_Utils = new Piq_Co_Utils();
 $calculatorWidget = $Piq_Co_Utils->getCalculatorWidget();
