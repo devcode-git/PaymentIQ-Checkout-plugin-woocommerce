@@ -36,6 +36,7 @@ $minPrice = 1990; // If amount is bigger than 1990 NOK and the setting is turned
   <!-- PaymentIQ Developed Widget -->
   <div id='santander-checkout-widget'></div>
   <script>
+  function renderWidget () {
     const checkout_widget = new window.SANTANDER_CHECKOUT_WIDGET(
       'santander-checkout-widget',
       {
@@ -54,6 +55,18 @@ $minPrice = 1990; // If amount is bigger than 1990 NOK and the setting is turned
         }
       }
     );
+  }
+
+  function initWidget () {
+    if (window.SANTANDER_CHECKOUT_WIDGET) {
+      renderWidget()
+    } else {
+      setTimeout(() => {
+        initWidget()
+      }, 150);
+    }
+  }
+  initWidget()
   </script>
 
 
