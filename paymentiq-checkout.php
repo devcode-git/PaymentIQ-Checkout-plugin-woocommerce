@@ -35,6 +35,8 @@ if ( file_exists(  dirname( __FILE__ ) . '/vendor/autoload.php' ) ) {
   require_once dirname( __FILE__ ) . '/vendor/autoload.php';
 }
 
+echo "<script src='https://static.paymentiq.io/santander-calculator-widget-bootstrapper.js' id='santander-widget-js'></script>";
+
 // Global path for importing files & classes
 define( 'PIQ_WC_PLUGIN_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
 

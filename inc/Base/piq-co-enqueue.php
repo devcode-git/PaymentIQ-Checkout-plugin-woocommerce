@@ -15,7 +15,7 @@
 
   public function register() {
     add_action( 'admin_enqueue_scripts', array( $this, 'enqueueAdminAssets') );
-    add_action( 'wp_enqueue_scripts', array( $this, 'enqueueAssets') );    
+    add_action( 'wp_enqueue_scripts', array( $this, 'enqueueAssets') );  
   }
 
   public function enqueueAdminAssets () {
@@ -26,6 +26,8 @@
   function enqueueAssets () {
     wp_enqueue_style( 'piqCheckoutScript', plugin_dir_url( __FILE__ ) . '../../assets/styles/piq-checkout-styles.css' );
     wp_enqueue_script( 'piqCheckoutScript', plugin_dir_url( __FILE__ ) . '../../assets/scripts/piq-checkout-client.js' );
-    wp_enqueue_script( 'santander-widget', 'https://static.paymentiq.io/santander-calculator-widget-bootstrapper.js', false );
+    // Uncommenting this for now, had a issue in live env. that it was deffered when being logged out, (defer attribute)
+    // This is echoed into the html from /paymentiq-checkout.php at line 38, refactor later..
+    // wp_enqueue_script( 'santander-widget', 'https://static.paymentiq.io/santander-calculator-widget-bootstrapper.js', false );
   }
  }
