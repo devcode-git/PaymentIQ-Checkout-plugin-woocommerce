@@ -91,10 +91,26 @@ class Piq_Co_Utils {
 		echo PIQ_CHECKOUT_WC()->piqButtonsColor;
 	}
 
+	// Return an iso 2 letter country code
 	public static function getSelectedCountry() {
 		$instance = PIQ_CHECKOUT_WC();
-		echo $instance->piqCountry != '' ? $instance->piqCountry : strval('sweden');
+		echo $instance->piqCountry != '' ? $instance->piqCountry : strval('SE');
 	}
+	
+	// Return an iso 3 letter country code based on the configured country in admin settings
+	// public static function getSelectedCountryIso3() {
+	// 	$instance = PIQ_CHECKOUT_WC();
+	// 	$country = $instance->piqCountry != '' ? $instance->piqCountry : strval('SE');
+
+	// 	$countryIsoMap = new stdObject();
+	// 	$countryIsoMap->SE = "SWE";
+	// 	$countryIsoMap->NO = "NOR";
+	// 	$countryIsoMap->DK = "DEN";
+	// 	$countryIsoMap->FI = "FIN";
+	// 	$countryIsoMap->demo = "SWE";
+
+	// 	echo $countryIsoMap->$country;
+	// }
 
 	public static function getSelectedLocale() {
 		$instance = PIQ_CHECKOUT_WC();

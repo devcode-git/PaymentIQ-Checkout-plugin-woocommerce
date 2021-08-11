@@ -36,37 +36,48 @@ $minPrice = 1990; // If amount is bigger than 1990 NOK and the setting is turned
   <!-- PaymentIQ Developed Widget -->
   <div id='santander-checkout-widget'></div>
   <script>
-  function renderWidget () {
-    const checkout_widget = new window.SANTANDER_CHECKOUT_WIDGET(
-      'santander-checkout-widget',
-      {
-        mode: '<?php echo $Piq_Co_Utils->getCalculatorMode(); ?>',
-        environment: 'production',
-        iframeHeight: '250px',
-        theme: {
-          raised: '<?php echo intval($Piq_Co_Utils->getCalculatorRaised()); ?>',
-          background: '<?php echo $Piq_Co_Utils->getCalculatorBackground(); ?>',
-          border: '<?php echo $Piq_Co_Utils->getCalculatorBorderColor(); ?>',
-          text: '<?php echo $Piq_Co_Utils->getCalculatorTextColor(); ?>',
-          borderRadius: '<?php echo $Piq_Co_Utils->getCalculatorBorderRadius(); ?>',
-        },
-        paymentDetails: {
-          loanAmount: <?php echo $price ?>
-        }
-      }
-    );
-  }
-
-  function initWidget () {
-    if (window.SANTANDER_CHECKOUT_WIDGET) {
-      renderWidget()
-    } else {
-      setTimeout(() => {
-        initWidget()
-      }, 150);
+    const countryMap = {
+      'SE': 'SWE',
+      'NO': 'NOR',
+      'DK': 'DEN',
+      'FI': 'FIN'
     }
-  }
-  initWidget()
+    console.log('##################### WHAT IS THE COUNTRY ##################')
+
+    function renderWidget () {
+      const checkout_widget = new window.SANTANDER_CHECKOUT_WIDGET(
+        'santander-checkout-widget',
+        {
+          mode: '<?php echo $Piq_Co_Utils->getCalculatorMode(); ?>',
+          environment: 'production',
+          iframeHeight: '250px',
+          localeId: '<?php echo $Piq_Co_Utils::getSelectedLocale(); ?>',
+          country: countryMap['<?php echo $Piq_Co_Utils::getSelectedCountry(); ?>'],
+          theme: {
+            raised: '<?php echo intval($Piq_Co_Utils->getCalculatorRaised()); ?>',
+            background: '<?php echo $Piq_Co_Utils->getCalculatorBackground(); ?>',
+            border: '<?php echo $Piq_Co_Utils->getCalculatorBorderColor(); ?>',
+            text: '<?php echo $Piq_Co_Utils->getCalculatorTextColor(); ?>',
+            borderRadius: '<?php echo $Piq_Co_Utils->getCalculatorBorderRadius(); ?>',
+          },
+          paymentDetails: {
+            loanAmount: <?php echo $price ?>
+          }
+        }
+      );
+    }
+
+    function initWidget () {
+      if (window.SANTANDER_CHECKOUT_WIDGET) {
+        renderWidget()
+      } else {
+        setTimeout(() => {
+          initWidget()
+        }, 150);
+      }
+    }
+
+    initWidget()
   </script>
 
 
