@@ -145,6 +145,12 @@ class Piq_Co_Setup {
 					'classic'       => 'Classic',
         ),
       ),
+      'calculatorMinPrice' => array(
+        'title' => 'Minumum price/amount for the Santander widget to show',
+        'type' => 'text',
+        'description' => 'Amount, tex 1999',
+        'default' => '500'
+      ),
       'calculatorBackground' => array(
         'title' => 'Calculator background color',
         'type' => 'text',

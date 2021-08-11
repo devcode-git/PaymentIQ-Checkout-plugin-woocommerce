@@ -25,9 +25,10 @@ require_once(dirname(__FILE__) . '/../../inc/piq-co-utils.php');
 $Piq_Co_Utils = new Piq_Co_Utils();
 $calculatorWidget = $Piq_Co_Utils->getCalculatorWidget();
 $price = intval($product->get_price());
-$minPrice = 1990; // If amount is bigger than 1990 NOK and the setting is turned on.
-// echo $product; // echo this one to see product data
+$minPrice = intval($Piq_Co_Utils->getCalculatorWidgetMinPrice()); // If amount is bigger than 1990 NOK and the setting is turned on.
 ?>
+
+
 
 <?php if($calculatorWidget && $price >= $minPrice) : ?>
 
@@ -42,7 +43,6 @@ $minPrice = 1990; // If amount is bigger than 1990 NOK and the setting is turned
       'DK': 'DEN',
       'FI': 'FIN'
     }
-    console.log('##################### WHAT IS THE COUNTRY ##################')
 
     function renderWidget () {
       const checkout_widget = new window.SANTANDER_CHECKOUT_WIDGET(

@@ -114,6 +114,7 @@ function initPIQCheckout () {
       $this->captureOnStatusComplete = strval($this->get_option( 'captureOnStatusComplete' ));
       $this->calculatorWidget = strval($this->get_option( 'calculatorWidget' ));
       $this->calculatorMode = strval($this->get_option( 'calculatorMode' ));
+      $this->calculatorMinPrice = strval($this->get_option( 'calculatorMinPrice' ));
       $this->calculatorBackground = strval($this->get_option( 'calculatorBackground' ));
       $this->calculatorBorderColor = strval($this->get_option( 'calculatorBorderColor' ));
       $this->calculatorTextColor = strval($this->get_option( 'calculatorTextColor' ));
