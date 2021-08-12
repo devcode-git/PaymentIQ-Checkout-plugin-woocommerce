@@ -37,6 +37,10 @@ class Piq_Co_Utils {
 		$totalAmount = $order->calculate_totals();
 	
 		$piqClass = PIQ_CHECKOUT_WC();
+
+		PIQ_CHECKOUT_WC()->PIQ_USER_ID = null; // reset the piq user id. We use this to display the receipt on order-reveived. Changes for every user
+		PIQ_CHECKOUT_WC()->PIQ_TX_ID = null; // reset the piq tx id. We use this to display the receipt on order-reveived. Changes for every user
+
 		PIQ_CHECKOUT_WC()->PIQ_TOTAL_AMOUNT = $totalAmount;
 		PIQ_CHECKOUT_WC()->PIQ_ORDER_ID = $order_id;
 		PIQ_CHECKOUT_WC()->PIQ_RECEIPT_URL = $order->get_checkout_payment_url();
@@ -91,11 +95,12 @@ class Piq_Co_Utils {
 		echo PIQ_CHECKOUT_WC()->piqButtonsColor;
 	}
 
+	// Return an iso 2 letter country code
 	public static function getSelectedCountry() {
 		$instance = PIQ_CHECKOUT_WC();
-		echo $instance->piqCountry != '' ? $instance->piqCountry : strval('sweden');
+		echo $instance->piqCountry != '' ? $instance->piqCountry : strval('SE');
 	}
-
+	
 	public static function getSelectedLocale() {
 		$instance = PIQ_CHECKOUT_WC();
 		echo $instance->piqLocale != '' ? $instance->piqLocale : strval('en_GB');
@@ -158,6 +163,77 @@ class Piq_Co_Utils {
 		do_action( 'piq_co_update_order_status', $status );
 	}
 
+	// Calculator widget options
+	public static function getCalculatorWidget() {
+		$instance = PIQ_CHECKOUT_WC();
+		$calculatorWidget = PIQ_CHECKOUT_WC()->calculatorWidget;
+		if ($calculatorWidget == '' || $calculatorWidget == 'yes') {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public static function getCalculatorMode() {
+		$instance = PIQ_CHECKOUT_WC();
+		$calculatorMode = PIQ_CHECKOUT_WC()->calculatorMode;
+		if ($calculatorMode == '') {
+			return 'modern';
+		}
+		return $calculatorMode;
+	}
+	
+	public static function getCalculatorWidgetMinPrice() {
+		$instance = PIQ_CHECKOUT_WC();
+		$calculatorMinPrice = PIQ_CHECKOUT_WC()->calculatorMinPrice;
+		return $calculatorMinPrice;
+	}
+
+	public static function getCalculatorBackground() {
+		$instance = PIQ_CHECKOUT_WC();
+		$calculatorBackground = PIQ_CHECKOUT_WC()->calculatorBackground;
+		if ($calculatorBackground == '') {
+			return '#f8f8f8';
+		}
+		return $calculatorBackground;
+	}
+
+	public static function getCalculatorBorderColor() {
+		$instance = PIQ_CHECKOUT_WC();
+		$calculatorBorderColor = PIQ_CHECKOUT_WC()->calculatorBorderColor;
+		if ($calculatorBorderColor == '') {
+			return '#cacaca';
+		}
+		return $calculatorBorderColor;
+	}
+
+	public static function getCalculatorTextColor() {
+		$instance = PIQ_CHECKOUT_WC();
+		$calculatorTextColor = PIQ_CHECKOUT_WC()->calculatorTextColor;
+		if ($calculatorTextColor == '') {
+			return '#333333';
+		}
+		return $calculatorTextColor;
+	}
+
+	public static function getCalculatorBorderRadius() {
+		$instance = PIQ_CHECKOUT_WC();
+		$calculatorBorderRadius = PIQ_CHECKOUT_WC()->calculatorBorderRadius;
+		if ($calculatorBorderRadius == '') {
+			return '4px';
+		}
+		return $calculatorBorderRadius;
+	}
+
+	public static function getCalculatorRaised() {
+		$instance = PIQ_CHECKOUT_WC();
+		$calculatorRaised = PIQ_CHECKOUT_WC()->calculatorRaised;
+		if ($calculatorRaised == '') {
+			return 0;
+		}
+		return $calculatorRaised;
+	}
+
  } //end of class
 
 
@@ -167,11 +243,17 @@ function handlePiqCheckoutTxStatusNotification() {
 	check_ajax_referer('piq_co_tx_status_update_nonce');
 	
 	$status	= isset($_POST['status']) ? trim( sanitize_text_field( $_POST['status'] ) ) : "";
-	$orderId	= isset($_POST['orderId']) ? trim( sanitize_text_field( $_POST['orderId'] ) ) : "";
+	$order_id	= isset($_POST['orderId']) ? trim( sanitize_text_field( $_POST['orderId'] ) ) : "";
+	$piq_user_id	= isset($_POST['userId']) ? trim( sanitize_text_field( $_POST['userId'] ) ) : "";
+	$piq_tx_id	= isset($_POST['txId']) ? trim( sanitize_text_field( $_POST['txId'] ) ) : "UNABLE TO READ TXID";
+
+	// We set these to use in order-recieved page - to show the cashier receipt
+	update_post_meta($order_id, '_piq_user_id', $piq_user_id);
+	update_post_meta($order_id, '_piq_tx_id', $piq_tx_id);
 
 	$args = array (
     'status' => $status,
-    'orderId' => $orderId, // max posts
+    'orderId' => $order_id, // max posts
 	);
 	
 	do_action('piq_co_handle_transaction_status_update', $args);

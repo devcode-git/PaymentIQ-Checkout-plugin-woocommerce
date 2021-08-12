@@ -7,7 +7,7 @@
  Plugin Name: PaymentIQ Checkout
  Plugin URI: https://docs.paymentiq.io/
  Description: PaymentIQ Checkout for Woocommerce
- Version: 1.0.4
+ Version: 1.0.6
  Author: PaymentIQ/Bambora
  Author URI: https://www.bambora.com/payment-for-gaming/paymentiq/
  License: GPLv2 or later
@@ -112,6 +112,14 @@ function initPIQCheckout () {
       $this->piqButtonsColor = strval($this->get_option( 'piqButtonsColor' ));
       $this->rememberUserDevice = strval($this->get_option( 'rememberUserDevice' ));
       $this->captureOnStatusComplete = strval($this->get_option( 'captureOnStatusComplete' ));
+      $this->calculatorWidget = strval($this->get_option( 'calculatorWidget' ));
+      $this->calculatorMode = strval($this->get_option( 'calculatorMode' ));
+      $this->calculatorMinPrice = strval($this->get_option( 'calculatorMinPrice' ));
+      $this->calculatorBackground = strval($this->get_option( 'calculatorBackground' ));
+      $this->calculatorBorderColor = strval($this->get_option( 'calculatorBorderColor' ));
+      $this->calculatorTextColor = strval($this->get_option( 'calculatorTextColor' ));
+      $this->calculatorBorderRadius = strval($this->get_option( 'calculatorBorderRadius' ));
+      $this->calculatorRaised = strval($this->get_option( 'calculatorRaised' ));
       $this->PIQ_TOTAL_AMOUNT = null;
       $this->PIQ_ORDER_ID = null;
 
@@ -401,7 +409,8 @@ function initPIQCheckout () {
       $order_id = $args['orderId'];
 
       $payment_methods = WC()->payment_gateways->get_available_payment_gateways();
-      $result = $payment_methods[ 'paymentiq-checkout' ]->process_payment( $order_id );
+
+      $result = $payment_methods[ 'paymentiq-checkout' ]->process_payment( $order_id);
       $resultUrl = $result['redirect'];
 
       // Never got this redirect to work - asked wordpress/woocommerce support without any luck.

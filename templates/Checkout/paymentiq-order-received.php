@@ -20,13 +20,52 @@ defined( 'ABSPATH' ) || exit;
 include_once PIQ_WC_PLUGIN_PATH . '/inc/piq-co-utils.php';
 ?>
 
-<?php Piq_Co_Utils::piq_wc_empty_cart(); ?>
+
+<?php
+$piq_user_id = $order->get_meta('_piq_user_id');
+$piq_tx_id = $order->get_meta('_piq_tx_id');
+
+Piq_Co_Utils::piq_wc_empty_cart();
+
+?>
 
 <div class="woocommerce-order">
 
 	<?php
 	if ( $order ) :
     do_action( 'woocommerce_before_thankyou', $order->get_id() );
+
+		$order = wc_get_order( $order->get_id() );
+		$piqTxId =  array_key_exists( 'transaction_id', $order ) ? $order['transaction_id'] : false;
+		$order_items = array();
+
+		foreach ( $order->get_items() as $item_id => $item ) {
+			$current_item = array();
+
+			$name = $item->get_name();
+			$number = $item->get_product_id();
+			$sub_tax = $item->get_subtotal_tax();
+			$sub_total = $item->get_subtotal();
+			$quantity = $item->get_quantity();
+
+			$current_item['label'] = $name;
+			$current_item['price'] = $sub_total / $quantity; // sub_total is the price * quantity, meaning total per item. We want the price per product
+			$current_item['vat'] = $sub_tax / $quantity;
+			$current_item['quantity'] = $quantity;
+			$current_item['number'] = $number;
+
+			array_push($order_items, $current_item);
+		}
+		
+		// return json-formatteted array of objects
+		$order_data = wp_json_encode( $order_items );
+
+		$shipping_total = $order->get_shipping_total();
+		$shipping_tax = $order->get_shipping_tax();
+		$order_freight_fee = $shipping_total + $shipping_tax;
+
+		echo $order_freight_fee;
+
     wc_empty_cart();
 		?>
 
@@ -42,6 +81,33 @@ include_once PIQ_WC_PLUGIN_PATH . '/inc/piq-co-utils.php';
 			</p>
 
 		<?php else : ?>
+
+			<div id='cashier-receipt' style='height: 75vh; min-height: 250px; margin-bottom: -100px; position: relative; top: -100px;'></div>
+			<script>
+
+				console.log(<?php echo $order_data ?>)
+					// We let the javascript know that it's time to setup the checkout
+					// We pass along the configured settings in payload
+					setTimeout(() => {
+						window.postMessage({
+							eventType: '::wooCommerceSetupPIQReceipt',
+							payload: {
+								containerId: 'cashier-receipt',
+								merchantId: <?php Piq_Co_Utils::getPiqMerchantId(); ?>,
+								userId: '<?php echo $piq_user_id; ?>',
+								txId: '<?php echo $piq_tx_id ?>',
+								environment: '<?php strval( Piq_Co_Utils::getPiqEnvironment() ); ?>',
+								buttonsColor: '<?php strval( Piq_Co_Utils::getPiqButtonsColor() ); ?>',
+								locale: '<?php strval( Piq_Co_Utils::getSelectedLocale() ); ?>',
+								orderItems: '<?php echo $order_data; ?>',
+								freightFee: '<?php echo $order_freight_fee; ?>'
+							}
+						}, '*')
+					}, 250)
+
+
+			</script>
+
 
 			<p class="woocommerce-notice woocommerce-notice--success woocommerce-thankyou-order-received"><?php echo apply_filters( 'woocommerce_thankyou_order_received_text', esc_html__( 'Thank you. Your order has been received.', 'woocommerce' ), $order ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
 
