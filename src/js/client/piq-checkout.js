@@ -6,6 +6,8 @@ window.addEventListener('message', function (e) {
     switch (eventType) {
       case '::wooCommerceSetupPIQCheckout':
         return setupCheckout(payload)
+      case '::wooCommerceSetupPIQReceipt':
+        return setupReceipt(payload)
       default: 
         return
     }
@@ -52,6 +54,7 @@ function setupCheckout (payload) {
   }
   
   const config = {
+    userId: 'PayTestSE',
     environment: appConfig.environment,
     "showAccounts": "inline",
     "globalSubmit": true,
@@ -63,9 +66,9 @@ function setupCheckout (payload) {
     "fetchConfig": true,
     "containerHeight": 'auto',
     "containerMinHeight": '600px',
-    lookupConfig: {
-      ...lookupConfig
-    },
+    // lookupConfig: {
+    //   ...lookupConfig
+    // },
     theme: {
       buttons: {
         color: buttonsColor
@@ -99,7 +102,9 @@ function renderCheckout ({ config, orderItems, orderReceivedPath, orderId, freig
           })
           document.getElementById('lookupIframe').scrollIntoView()
         },
-        success: data => notifyOrderStatus('success', orderReceivedPath, orderId, data),
+        success: data => {
+          notifyOrderStatus('success', orderReceivedPath, orderId, data)
+        },
         failure: data => notifyOrderStatus('failure', orderReceivedPath, orderId, data),
         pending: data => notifyOrderStatus('pending', orderReceivedPath, orderId, data),
         transactionInit: data => {
@@ -130,14 +135,30 @@ function renderCheckout ({ config, orderItems, orderReceivedPath, orderId, freig
    We do this via a postMessage back (templates/Checkout/paymentiq-checkout.php)
 */
 function notifyOrderStatus (status, orderReceivedPath, orderId, data) {
-  console.log('notifyOrderStatus')
+  function getParameterByName(name) {
+    const url = document.querySelector('#cashierIframe').src
+
+    name = name.replace(/[\[\]]/g, '\\$&');
+    const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)')
+    const results = regex.exec(url);
+    
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+  }
+  
+  const userId = getParameterByName('userId')
+
   let payload = {}
   switch (status) {
     case 'success':
+
       payload = {
         eventType: '::wooCommercePaymentSuccess',
         payload: {
           orderId,
+          userId,
+          txId: data.data.payload.txRefId,
           ...data
         }
       }
@@ -168,4 +189,72 @@ function notifyOrderStatus (status, orderReceivedPath, orderId, data) {
       return
   }
   window.postMessage(payload, '*')
+}
+
+/* SETUP RECEIPT */
+
+function setupReceipt (payload) {
+  const config = {
+    // userId: payload.userId,
+    merchantId: payload.merchantId,
+    userId: payload.userId,
+    environment: 'test',
+    showReceipt: 'only',
+    containerHeight: '100%',
+    containerWidth: '100%',
+    txRefId: payload.txId,
+    receiptExcludeKeys: [
+      'receiptDepositTax',
+      'receiptDepositTxAmount',
+      'receiptDepositPspRefId',
+      'receiptDepositTax',
+      'receiptDepositFee',
+      'Insättningsavgift'
+    ],
+    theme: {
+      buttons: {
+        color: payload.buttonsColor
+      }
+    }
+  }
+
+  renderReceipt({
+    config,
+    containerId: payload.containerId,
+    orderItems: payload.orderItems,
+    freightFee: payload.freightFee,
+  })
+}
+
+function renderReceipt ({ config, containerId, orderItems, freightFee }) {
+  if (!_PaymentIQCashier) {
+    setTimeout(function () {
+      renderReceipt({ config, containerId })
+    }, 100)
+  } else {
+    new _PaymentIQCashier(`#${containerId}`, config, (api) => {
+      api.on({
+        cashierInitLoad: () => {
+          api.set({
+            order: {
+              orderItems: JSON.parse(orderItems),
+              freightFee
+            }
+          })
+        }
+      })
+
+      api.css(`
+        .details-container {
+          width: 600px !important;
+        }
+
+        .footer {
+          display: none;
+        }
+      `)
+
+
+    })
+  }
 }

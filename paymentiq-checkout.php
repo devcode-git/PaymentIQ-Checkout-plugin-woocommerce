@@ -409,7 +409,8 @@ function initPIQCheckout () {
       $order_id = $args['orderId'];
 
       $payment_methods = WC()->payment_gateways->get_available_payment_gateways();
-      $result = $payment_methods[ 'paymentiq-checkout' ]->process_payment( $order_id );
+
+      $result = $payment_methods[ 'paymentiq-checkout' ]->process_payment( $order_id);
       $resultUrl = $result['redirect'];
 
       // Never got this redirect to work - asked wordpress/woocommerce support without any luck.

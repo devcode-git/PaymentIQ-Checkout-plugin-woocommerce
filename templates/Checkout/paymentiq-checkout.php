@@ -65,6 +65,8 @@ do_action( 'piq_co_wc_before_checkout_form' );
 								_ajax_nonce: '<?php echo wp_create_nonce( 'piq_co_tx_status_update_nonce' ); ?>', /* wordpress way of determining validity of ajax-request from plugin */
 								status: 'success',
 								orderId: payload.orderId,
+								userId: payload.userId,
+								txId: payload.txId,
 								...payload.data
 							};
 						

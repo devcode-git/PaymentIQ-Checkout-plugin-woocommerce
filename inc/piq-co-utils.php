@@ -37,6 +37,10 @@ class Piq_Co_Utils {
 		$totalAmount = $order->calculate_totals();
 	
 		$piqClass = PIQ_CHECKOUT_WC();
+
+		PIQ_CHECKOUT_WC()->PIQ_USER_ID = null; // reset the piq user id. We use this to display the receipt on order-reveived. Changes for every user
+		PIQ_CHECKOUT_WC()->PIQ_TX_ID = null; // reset the piq tx id. We use this to display the receipt on order-reveived. Changes for every user
+
 		PIQ_CHECKOUT_WC()->PIQ_TOTAL_AMOUNT = $totalAmount;
 		PIQ_CHECKOUT_WC()->PIQ_ORDER_ID = $order_id;
 		PIQ_CHECKOUT_WC()->PIQ_RECEIPT_URL = $order->get_checkout_payment_url();
@@ -239,11 +243,17 @@ function handlePiqCheckoutTxStatusNotification() {
 	check_ajax_referer('piq_co_tx_status_update_nonce');
 	
 	$status	= isset($_POST['status']) ? trim( sanitize_text_field( $_POST['status'] ) ) : "";
-	$orderId	= isset($_POST['orderId']) ? trim( sanitize_text_field( $_POST['orderId'] ) ) : "";
+	$order_id	= isset($_POST['orderId']) ? trim( sanitize_text_field( $_POST['orderId'] ) ) : "";
+	$piq_user_id	= isset($_POST['userId']) ? trim( sanitize_text_field( $_POST['userId'] ) ) : "";
+	$piq_tx_id	= isset($_POST['txId']) ? trim( sanitize_text_field( $_POST['txId'] ) ) : "UNABLE TO READ TXID";
+
+	// We set these to use in order-recieved page - to show the cashier receipt
+	update_post_meta($order_id, '_piq_user_id', $piq_user_id);
+	update_post_meta($order_id, '_piq_tx_id', $piq_tx_id);
 
 	$args = array (
     'status' => $status,
-    'orderId' => $orderId, // max posts
+    'orderId' => $order_id, // max posts
 	);
 	
 	do_action('piq_co_handle_transaction_status_update', $args);
