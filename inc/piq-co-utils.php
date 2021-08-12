@@ -38,9 +38,6 @@ class Piq_Co_Utils {
 	
 		$piqClass = PIQ_CHECKOUT_WC();
 
-		PIQ_CHECKOUT_WC()->PIQ_USER_ID = null; // reset the piq user id. We use this to display the receipt on order-reveived. Changes for every user
-		PIQ_CHECKOUT_WC()->PIQ_TX_ID = null; // reset the piq tx id. We use this to display the receipt on order-reveived. Changes for every user
-
 		PIQ_CHECKOUT_WC()->PIQ_TOTAL_AMOUNT = $totalAmount;
 		PIQ_CHECKOUT_WC()->PIQ_ORDER_ID = $order_id;
 		PIQ_CHECKOUT_WC()->PIQ_RECEIPT_URL = $order->get_checkout_payment_url();

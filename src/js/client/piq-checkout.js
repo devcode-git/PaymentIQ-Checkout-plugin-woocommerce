@@ -66,9 +66,9 @@ function setupCheckout (payload) {
     "fetchConfig": true,
     "containerHeight": 'auto',
     "containerMinHeight": '600px',
-    // lookupConfig: {
-    //   ...lookupConfig
-    // },
+    lookupConfig: {
+      ...lookupConfig
+    },
     theme: {
       buttons: {
         color: buttonsColor
@@ -195,7 +195,6 @@ function notifyOrderStatus (status, orderReceivedPath, orderId, data) {
 
 function setupReceipt (payload) {
   const config = {
-    // userId: payload.userId,
     merchantId: payload.merchantId,
     userId: payload.userId,
     environment: 'test',

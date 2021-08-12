@@ -85,7 +85,6 @@ Piq_Co_Utils::piq_wc_empty_cart();
 			<div id='cashier-receipt' style='height: 75vh; min-height: 250px; margin-bottom: -100px; position: relative; top: -100px;'></div>
 			<script>
 
-				console.log(<?php echo $order_data ?>)
 					// We let the javascript know that it's time to setup the checkout
 					// We pass along the configured settings in payload
 					setTimeout(() => {
