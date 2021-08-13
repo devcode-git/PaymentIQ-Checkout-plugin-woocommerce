@@ -152,7 +152,6 @@ function notifyOrderStatus (status, orderReceivedPath, orderId, data) {
   let payload = {}
   switch (status) {
     case 'success':
-
       payload = {
         eventType: '::wooCommercePaymentSuccess',
         payload: {
@@ -179,6 +178,8 @@ function notifyOrderStatus (status, orderReceivedPath, orderId, data) {
         eventType: '::wooCommercePaymentPending',
         payload: {
           orderId,
+          userId,
+          txId: data.data.payload.txRefId,
           ...data
         }
       }

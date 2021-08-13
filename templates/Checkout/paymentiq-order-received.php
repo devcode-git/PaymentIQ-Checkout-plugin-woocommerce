@@ -64,8 +64,6 @@ Piq_Co_Utils::piq_wc_empty_cart();
 		$shipping_tax = $order->get_shipping_tax();
 		$order_freight_fee = $shipping_total + $shipping_tax;
 
-		echo $order_freight_fee;
-
     wc_empty_cart();
 		?>
 
