@@ -37,12 +37,6 @@ $minPrice = intval($Piq_Co_Utils->getCalculatorWidgetMinPrice()); // If amount i
   <!-- PaymentIQ Developed Widget -->
   <div id='santander-checkout-widget'></div>
   <script>
-    const countryMap = {
-      'SE': 'SWE',
-      'NO': 'NOR',
-      'DK': 'DEN',
-      'FI': 'FIN'
-    }
 
     function renderWidget () {
       const checkout_widget = new window.SANTANDER_CHECKOUT_WIDGET(
@@ -52,7 +46,7 @@ $minPrice = intval($Piq_Co_Utils->getCalculatorWidgetMinPrice()); // If amount i
           environment: 'production',
           iframeHeight: '250px',
           localeId: '<?php echo $Piq_Co_Utils::getSelectedLocale(); ?>',
-          country: countryMap['<?php echo $Piq_Co_Utils::getSelectedCountry(); ?>'],
+          country: '<?php echo $Piq_Co_Utils::getSelectedCountry(); ?>',
           theme: {
             raised: '<?php echo intval($Piq_Co_Utils->getCalculatorRaised()); ?>',
             background: '<?php echo $Piq_Co_Utils->getCalculatorBackground(); ?>',
