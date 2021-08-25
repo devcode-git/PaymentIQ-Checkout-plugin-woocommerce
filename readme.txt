@@ -3,7 +3,7 @@ Contributors: Devcode/PaymentIQ/Bambora
 Tags: woocommerce, woo commerce, payment, payment gateway, gateway, paymentiq, bambora, checkout, integration, woocommerce bambora, woocommerce paymentiq checkout, psp
 Requires at least: 3.0.0
 Tested up to: 5.7.1
-Stable tag: 1.0.4
+Stable tag: 1.0.6
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Sourcecode: https://github.com/devcode-git/PaymentIQ-Checkout-Woocommerce
@@ -44,6 +44,13 @@ With PaymentIQ Checkout for WooCommerce, you get an inline checkout in your web 
 9. Click save changes and your are ready to start using PaymentIQ Checout
 
 == Changelog ==
+
+= 1.0.6 =
+* Santander pricing widget can now be added by the plugin
+* Plugin settings now include a settings panel for the Santander pricing widget
+
+= 1.0.5 =
+* bugfixes
 
 = 1.0.4 =
 * Navigate to the Woocommerce configured order-received endpoint - i.e not hardcoded to /checkout/order-received
