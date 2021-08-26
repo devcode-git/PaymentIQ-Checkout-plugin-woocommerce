@@ -129,7 +129,6 @@ $minPrice = intval($Piq_Co_Utils->getCalculatorWidgetMinPrice()); // If amount i
     }
 
     function initWidget () {
-			console.log('initWidget')
       if (window.SANTANDER_CHECKOUT_WIDGET) {
         renderWidget()
       } else {
