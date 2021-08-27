@@ -173,7 +173,7 @@ function initPIQCheckout () {
 	    @return string
     */
     public function overrideTemplate( $template, $template_name ) {
-      // echo $template_name prints out the name of every template used.
+      // echo $template_name; // prints out the name of every template used.
       // by this we can identity what templates we need to make our own versions
       // of to display our custom stuff
       // echo $template_name;
@@ -189,6 +189,9 @@ function initPIQCheckout () {
         case 'checkout/thankyou.php':
           // Todo: Reworkd paymentiq-order-received to show our own thank-you page - based on the cashier
           $template = PIQ_WC_PLUGIN_PATH . '/templates/Checkout/paymentiq-order-received.php';
+          return $template;
+        case 'cart/cart.php':
+          $template = PIQ_WC_PLUGIN_PATH . '/templates/paymentiq-cart-page.php';
           return $template;
         default:
           return $template;
