@@ -131,9 +131,6 @@ do_action( 'woocommerce_before_cart' ); ?>
 					<?php
 				}
 			}
-      echo "hejsann!!";
-      echo ($_product->get_price() * $cart_item['quantity']);
-      // echo $cart_item['quantity'];
 			?>
 
 			<?php do_action( 'woocommerce_cart_contents' ); ?>
