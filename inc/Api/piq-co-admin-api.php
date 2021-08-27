@@ -145,7 +145,7 @@ class Piq_Co_Admin_Api {
         return new \WP_Error( 'paymentiq_checkout_error', 'Refund failed - No PIQ transaction id found');
       }
 
-      $piqMerchantId = PIQ_CHECKOUT_WC()->merchantId;
+      $piqMerchantId = PIQ_CHECKOUT_WC()->piqMerchantId;
 
       $transactionId = $piq_capture_tx_id ? $piq_capture_tx_id : $piqTxId;
 
@@ -200,7 +200,7 @@ class Piq_Co_Admin_Api {
         return new \WP_Error( 'paymentiq_checkout_error', 'Capture failed - No PIQ transaction id found');
       }
 
-      $piqMerchantId = PIQ_CHECKOUT_WC()->merchantId;
+      $piqMerchantId = PIQ_CHECKOUT_WC()->piqMerchantId;
 
       $baseUrl = $this->getEnvironmentBaseUrl();
       $endpoint = '/paymentiq/admin/v1/payments/capture/';
@@ -277,7 +277,7 @@ class Piq_Co_Admin_Api {
         return new \WP_Error( 'paymentiq_checkout_error', 'Void failed - No PIQ transaction id found');
       }
 
-      $piqMerchantId = PIQ_CHECKOUT_WC()->merchantId;
+      $piqMerchantId = PIQ_CHECKOUT_WC()->piqMerchantId;
 
       $baseUrl = $this->getEnvironmentBaseUrl();
       $endpoint = '/paymentiq/admin/v1/payments/void/';
