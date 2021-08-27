@@ -45,6 +45,9 @@ With PaymentIQ Checkout for WooCommerce, you get an inline checkout in your web 
 
 == Changelog ==
 
+= 1.0.7 =
+* Omit debuggin logs in screen from echo statements.
+
 = 1.0.6 =
 * Santander pricing widget can now be added by the plugin
 * Plugin settings now include a settings panel for the Santander pricing widget
