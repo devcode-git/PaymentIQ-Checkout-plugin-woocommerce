@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         VERSION = '0.0.0'
-        WORDPRESS_DEVCODE_PWD     = credentials('wordpress-devopspaymentiq-pwd')
+        WORDPRESS_DEVCODE_PWD = credentials('wordpress-devopspaymentiq-pwd')
     }
     options {
         buildDiscarder(logRotator(numToKeepStr: '1'))
