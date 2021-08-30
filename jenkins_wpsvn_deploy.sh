@@ -1,12 +1,12 @@
 # main config
-WP_ORG_USER=$1 # your WordPress.org username
-WP_ORG_PASS=$2 # your WordPress.org password
+WP_ORG_USER=$1 # WordPress.org username passed in as arg
+WP_ORG_PASS=$2 # WordPress.org password passed in as arg
 PLUGINSLUG="PaymentIQ checkout"
 CURRENTDIR=`pwd`
-MAINFILE="paymentiq-checkout.php" # this should be the name of your main php file in the wordpress plugin
+MAINFILE="paymentiq-checkout.php" # this should be the name of the main php file in the wordpress plugin
 
 # git config
-GITPATH="$CURRENTDIR" # this file should be in the base of your git repository
+GITPATH="$CURRENTDIR" # this is the the base of the git repository
 
 # svn config
 SVNPATH="/tmp/$PLUGINSLUG" # path to a temp SVN repo. No trailing slash required and don't add trunk.
