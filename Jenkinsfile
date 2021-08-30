@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment {
         VERSION = '0.0.0'
+        WORDPRESS_DEVCODE_PWD     = credentials('wordpress-devopspaymentiq-pwd')
     }
     options {
         buildDiscarder(logRotator(numToKeepStr: '1'))
@@ -31,7 +32,7 @@ pipeline {
                     if (env.BRANCH_NAME == "master") {
                         VERSION = sh(script: "jq -r '.version' package.json", returnStdout: true).trim()
                         input message: "Deploy ${env.BRANCH_NAME} as ${$VERSION}?", ok: 'Yes'
-                        ./jenkins_wpsvn_deploy.sh devopspaymentiq PWD_VARIABLE_TO_FIX
+                        ./jenkins_wpsvn_deploy.sh devopspaymentiq $WORDPRESS_DEVCODE_PWD
                     } else {
                         sh 'npm run node-log' // Do nothing
                     }
