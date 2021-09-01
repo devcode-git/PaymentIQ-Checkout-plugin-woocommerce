@@ -29,7 +29,6 @@ $minPrice = intval($Piq_Co_Utils->getCalculatorWidgetMinPrice()); // If amount i
 ?>
 
 
-
 <?php if($calculatorWidget && $price >= $minPrice) : ?>
 
 <div class="product_meta">
