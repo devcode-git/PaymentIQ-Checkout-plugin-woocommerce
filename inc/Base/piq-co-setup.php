@@ -125,7 +125,7 @@ class Piq_Co_Setup {
       'calculatorWidget' => array(
         'title' => 'Enable loan calculator',
         'type' => 'checkbox',
-        'description' => 'Displays a loan calculator at product page',
+        'description' => 'Displays a loan calculator at product page (used in combination with Santander credit installment)',
         'default' => 'yes'
       ),
       array(
@@ -146,7 +146,7 @@ class Piq_Co_Setup {
         ),
       ),
       'calculatorMinPrice' => array(
-        'title' => 'Minumum price/amount for the Santander widget to show',
+        'title' => 'Minumum price/amount for the widget to show',
         'type' => 'text',
         'description' => 'Amount, tex 1999',
         'default' => '500'
