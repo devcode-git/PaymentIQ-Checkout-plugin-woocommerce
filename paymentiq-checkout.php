@@ -7,7 +7,7 @@
  Plugin Name: PaymentIQ Checkout
  Plugin URI: https://docs.paymentiq.io/
  Description: PaymentIQ Checkout for Woocommerce
- Version: 1.0.7
+ Version: 1.0.8
  Author: PaymentIQ/Bambora
  Author URI: https://www.bambora.com/payment-for-gaming/paymentiq/
  License: GPLv2 or later

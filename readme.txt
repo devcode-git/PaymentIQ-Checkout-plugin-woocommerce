@@ -3,7 +3,7 @@ Contributors: Devcode/PaymentIQ/Bambora
 Tags: woocommerce, woo commerce, payment, payment gateway, gateway, paymentiq, bambora, checkout, integration, woocommerce bambora, woocommerce paymentiq checkout, psp
 Requires at least: 3.0.0
 Tested up to: 5.7.1
-Stable tag: 1.0.7
+Stable tag: 1.0.8
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Sourcecode: https://github.com/devcode-git/PaymentIQ-Checkout-Woocommerce
@@ -44,6 +44,9 @@ With PaymentIQ Checkout for WooCommerce, you get an inline checkout in your web 
 9. Click save changes and your are ready to start using PaymentIQ Checout
 
 == Changelog ==
+
+= 1.0.8 =
+* Add autoOpenFirstPaymentMethod=false to checkout configs.
 
 = 1.0.7 =
 * Omit debuggin logs in screen from echo statements.
