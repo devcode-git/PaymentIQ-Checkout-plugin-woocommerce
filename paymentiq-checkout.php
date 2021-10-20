@@ -203,7 +203,7 @@ function initPIQCheckout () {
       $this->enabled = array_key_exists( 'enabled', $this->settings ) ? $this->settings['enabled'] : 'yes';
       $this->title = array_key_exists( 'title', $this->settings ) ? $this->settings['title'] : 'PaymentIQ Checkout';
       $this->description = array_key_exists( 'description', $this->settings ) ? $this->settings['description'] : 'Pay using PaymentIQ Checkout';
-      $this->merchantId = array_key_exists( 'merchant', $this->settings ) ? $this->settings['merchantId'] : '';
+      $this->piqMerchantId = array_key_exists( 'merchant', $this->settings ) ? $this->settings['merchantId'] : '';
       $this->accesstoken = array_key_exists( 'accesstoken', $this->settings ) ? $this->settings['accesstoken'] : '';
     }
 
