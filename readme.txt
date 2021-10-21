@@ -47,7 +47,8 @@ With PaymentIQ Checkout for WooCommerce, you get an inline checkout in your web 
 
 = 1.0.8 =
 * Add autoOpenFirstPaymentMethod=false to checkout configs.
-* Deleting 'Auto capture' option from WP admin as an option as it has not been working, need to look into this feature.
+* Change from 'merchantId' to 'piqMerchantId' in payment-checkout.php > line 206.
+* Hide "Capture charge" button from order details if auto-capture on order complete is enabled.
 
 = 1.0.7 =
 * Omit debuggin logs in screen from echo statements.

@@ -388,7 +388,7 @@ function initPIQCheckout () {
 
         // $allowed_piq_capture_statuses = ['SUCCESS_WAITING_CAPTURE', 'SUCCESS_WAITING_AUTO_CAPTURE'];
         // $piq_tx_status = $order->get_meta('piq_tx_status');
-        if (Piq_Co_Admin_Utils::supports_capture( $order )) {
+        if (Piq_Co_Admin_Utils::supports_capture( $order ) && $this->captureOnStatusComplete !== 'yes') {
           // In piq-checkout-admin.js we have a registered click handler to the id of this button
           // That one is triggered and deals with the rest of the logic for displaying & managing the capture
 
