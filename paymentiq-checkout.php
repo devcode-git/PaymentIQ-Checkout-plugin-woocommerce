@@ -7,7 +7,7 @@
  Plugin Name: PaymentIQ Checkout
  Plugin URI: https://docs.paymentiq.io/
  Description: PaymentIQ Checkout for Woocommerce
- Version: 1.0.7
+ Version: 1.0.8
  Author: PaymentIQ/Bambora
  Author URI: https://www.bambora.com/payment-for-gaming/paymentiq/
  License: GPLv2 or later
@@ -203,7 +203,7 @@ function initPIQCheckout () {
       $this->enabled = array_key_exists( 'enabled', $this->settings ) ? $this->settings['enabled'] : 'yes';
       $this->title = array_key_exists( 'title', $this->settings ) ? $this->settings['title'] : 'PaymentIQ Checkout';
       $this->description = array_key_exists( 'description', $this->settings ) ? $this->settings['description'] : 'Pay using PaymentIQ Checkout';
-      $this->merchantId = array_key_exists( 'merchant', $this->settings ) ? $this->settings['merchantId'] : '';
+      $this->piqMerchantId = array_key_exists( 'merchant', $this->settings ) ? $this->settings['piqMerchantId'] : '';
       $this->accesstoken = array_key_exists( 'accesstoken', $this->settings ) ? $this->settings['accesstoken'] : '';
     }
 
@@ -388,7 +388,7 @@ function initPIQCheckout () {
 
         // $allowed_piq_capture_statuses = ['SUCCESS_WAITING_CAPTURE', 'SUCCESS_WAITING_AUTO_CAPTURE'];
         // $piq_tx_status = $order->get_meta('piq_tx_status');
-        if (Piq_Co_Admin_Utils::supports_capture( $order )) {
+        if (Piq_Co_Admin_Utils::supports_capture( $order ) && $this->captureOnStatusComplete !== 'yes') {
           // In piq-checkout-admin.js we have a registered click handler to the id of this button
           // That one is triggered and deals with the rest of the logic for displaying & managing the capture
 

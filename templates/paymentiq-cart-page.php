@@ -179,8 +179,11 @@ do_action( 'woocommerce_before_cart' ); ?>
 require_once(dirname(__FILE__) . '/../inc/piq-co-utils.php');
 $Piq_Co_Utils = new Piq_Co_Utils();
 $calculatorWidget = $Piq_Co_Utils->getCalculatorWidget();
+$price = intval($_product->get_price() * $cart_item['quantity']);
 $minPrice = intval($Piq_Co_Utils->getCalculatorWidgetMinPrice()); // If amount is bigger than 1990 NOK and the setting is turned on.
 ?>
+
+<?php if($calculatorWidget && $price >= $minPrice) : ?>
 
 <div class="cart-calculator" style="display:flex;justify-content:flex-end">
 
@@ -224,6 +227,8 @@ $minPrice = intval($Piq_Co_Utils->getCalculatorWidgetMinPrice()); // If amount i
   </script>
 
 </div>
+
+<?php endif; ?>
 
 <!-- PaymentIQ/Santander Calculator Widget END -->
 

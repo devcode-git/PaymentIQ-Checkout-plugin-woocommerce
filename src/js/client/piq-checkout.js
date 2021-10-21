@@ -71,7 +71,8 @@ function setupCheckout (payload) {
         color: buttonsColor
       }
     },
-    ...appConfig
+    ...appConfig,
+    autoOpenFirstPaymentMethod: false
   }
 
   renderCheckout({ config, orderItems, orderReceivedPath, orderId, freightFee })
