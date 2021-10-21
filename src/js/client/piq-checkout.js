@@ -72,7 +72,7 @@ function setupCheckout (payload) {
       }
     },
     ...appConfig,
-    autoOpenFirstPaymentMethod: false,
+    autoOpenFirstPaymentMethod: false
   }
 
   renderCheckout({ config, orderItems, orderReceivedPath, orderId, freightFee })

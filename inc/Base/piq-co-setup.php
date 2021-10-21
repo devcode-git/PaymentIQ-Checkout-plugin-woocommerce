@@ -110,13 +110,12 @@ class Piq_Co_Setup {
         'description' => 'The auth client secret',
         'default' => ''
       ),
-      // This don't work, need to look into it.
-      // 'captureOnStatusComplete' => array(
-      //   'title' => 'Capture on order completed',
-      //   'type' => 'checkbox',
-      //   'description' => 'When this is enabled the full payment will be captured when the order status changes to Completed. If not enabled, manual capture is available in the order details.',
-      //   'default' => 'no'
-      // ),
+      'captureOnStatusComplete' => array(
+        'title' => 'Capture on order completed',
+        'type' => 'checkbox',
+        'description' => 'When this is enabled the full payment will be captured when the order status changes to Completed. If not enabled, manual capture is available in the order details.',
+        'default' => 'no'
+      ),
       'piqButtonsColor' => array(
         'title' => 'PaymentIQ Checkout Buttons color',
         'type' => 'text',
