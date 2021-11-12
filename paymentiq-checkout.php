@@ -395,6 +395,10 @@ function initPIQCheckout () {
 
           $piq_captured_amount = $order->get_meta('piq_captured_amount');
           echo '<button id="paymentiq-checkout-manual-capture" type="button" class="button add-special-item" data-piq_captured_amount="'. esc_attr($piq_captured_amount)  .'" data-order_id="'. esc_attr($order->get_id())  .'" >Capture charge</button>';
+        } else if ($this->captureOnStatusComplete === 'yes') {
+          echo '<button disabled id="paymentiq-checkout-manual-capture" type="button" class="button add-special-item" data-piq_captured_amount="'. esc_attr($piq_captured_amount)  .'" data-order_id="'. esc_attr($order->get_id())  .'" >
+          Full amount will be captured when status is set to "Completed"
+          </button>';
         }
     } 
 
