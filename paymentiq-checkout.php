@@ -203,7 +203,8 @@ function initPIQCheckout () {
       $this->enabled = array_key_exists( 'enabled', $this->settings ) ? $this->settings['enabled'] : 'yes';
       $this->title = array_key_exists( 'title', $this->settings ) ? $this->settings['title'] : 'PaymentIQ Checkout';
       $this->description = array_key_exists( 'description', $this->settings ) ? $this->settings['description'] : 'Pay using PaymentIQ Checkout';
-      $this->piqMerchantId = array_key_exists( 'merchant', $this->settings ) ? $this->settings['piqMerchantId'] : '';
+      // $this->piqMerchantId = array_key_exists( 'merchant', $this->settings ) ? $this->settings['piqMerchantId'] : '';
+      $this->merchantId = array_key_exists( 'merchant', $this->settings ) ? $this->settings['merchantId'] : '';
       $this->accesstoken = array_key_exists( 'accesstoken', $this->settings ) ? $this->settings['accesstoken'] : '';
     }
 
@@ -394,6 +395,10 @@ function initPIQCheckout () {
 
           $piq_captured_amount = $order->get_meta('piq_captured_amount');
           echo '<button id="paymentiq-checkout-manual-capture" type="button" class="button add-special-item" data-piq_captured_amount="'. esc_attr($piq_captured_amount)  .'" data-order_id="'. esc_attr($order->get_id())  .'" >Capture charge</button>';
+        } else if ($this->captureOnStatusComplete === 'yes') {
+          echo '<button disabled id="paymentiq-checkout-manual-capture" type="button" class="button add-special-item" data-piq_captured_amount="'. esc_attr($piq_captured_amount)  .'" data-order_id="'. esc_attr($order->get_id())  .'" >
+          Full amount will be captured when status is set to "Completed"
+          </button>';
         }
     } 
 
