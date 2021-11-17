@@ -7,7 +7,7 @@
  Plugin Name: PaymentIQ Checkout
  Plugin URI: https://docs.paymentiq.io/
  Description: PaymentIQ Checkout for Woocommerce
- Version: 1.0.8
+ Version: 1.0.9
  Author: PaymentIQ/Bambora
  Author URI: https://www.bambora.com/payment-for-gaming/paymentiq/
  License: GPLv2 or later
@@ -395,7 +395,7 @@ function initPIQCheckout () {
 
           $piq_captured_amount = $order->get_meta('piq_captured_amount');
           echo '<button id="paymentiq-checkout-manual-capture" type="button" class="button add-special-item" data-piq_captured_amount="'. esc_attr($piq_captured_amount)  .'" data-order_id="'. esc_attr($order->get_id())  .'" >Capture charge</button>';
-        } else if ($this->captureOnStatusComplete === 'yes') {
+        } else if (Piq_Co_Admin_Utils::supports_capture( $order ) && $this->captureOnStatusComplete === 'yes') {
           echo '<button disabled id="paymentiq-checkout-manual-capture" type="button" class="button add-special-item" data-piq_captured_amount="'. esc_attr($piq_captured_amount)  .'" data-order_id="'. esc_attr($order->get_id())  .'" >
           Full amount will be captured when status is set to "Completed"
           </button>';
