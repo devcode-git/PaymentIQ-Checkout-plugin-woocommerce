@@ -48,9 +48,12 @@ function setupCheckout (payload) {
     identifyFields: 'zip,email',
     environment: appConfig.environment,
     checkUserDevice: checkDeviceId,
-    owner: 'Santander'
+    owner: 'Santander',
+    // version: 'userdata-api',
+    identifyProvider: 'manual',
+    containerWidth: '100%'
   }
-  
+
   const config = {
     environment: appConfig.environment,
     "showAccounts": "inline",
@@ -62,7 +65,8 @@ function setupCheckout (payload) {
     "showReceipt": false, // we redirect to order-received page right away instead
     "fetchConfig": true,
     "containerHeight": 'auto',
-    "containerMinHeight": '600px',
+    "containerMinHeight": '820px',
+    containerWidth: '100%',
     lookupConfig: {
       ...lookupConfig
     },
@@ -90,6 +94,11 @@ function renderCheckout ({ config, orderItems, orderReceivedPath, orderId, freig
     let providerWasOpened = false
 
     new _PaymentIQCashier('#piq-checkout', config, (api) => {
+      api.css(`
+      #cashier {
+        width: 100%!important;
+      }
+      `)
       api.on({
         cashierInitLoad: () => {
           api.set({

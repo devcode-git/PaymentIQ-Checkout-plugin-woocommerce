@@ -35,9 +35,9 @@ You need to be a registered committer or use the paymentiq user: **devopspayment
 Want to be added as a committer? Register a user at https://wordpress.org/plugins/ and reach out to paymentiq devops or Simon Solders.
 
 1. Update the changelog in [readme.txt](https://github.com/devcode-git/PaymentIQ-Checkout-Plugin-Woocommerce/blob/main/readme.txt)
-2. Copy your updated code into /trunk - everyting except node_modules
+2. Copy your updated code into /trunk - everyting except node_modules and src
 3. Create a new folder under /tags for the version
-4. Copy all files and folders except **/node_modules** & **/src**
+4. Copy all files and folders except **/node_modules** & **/src** && git related files.
 5. Commit your changes to publish the new version
 
 ## Demo

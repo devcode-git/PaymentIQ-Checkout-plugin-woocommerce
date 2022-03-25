@@ -20,9 +20,9 @@ do_action( 'piq_co_wc_before_checkout_form' );
 
 <form name="checkout" class="checkout woocommerce-checkout">
 	<div id="piq-checkout-wrapper">
-		<div id="piq-checkout"></div>
 		<?php Piq_Co_Utils::piq_wc_show_checkout(); ?>
 		<?php woocommerce_order_review(); ?>
+		<div id="piq-checkout"></div>
 	</div>
   <script>
 		// We let the javascript know that it's time to setup the checkout

@@ -1,6 +1,6 @@
 {
   "name": "paymentiq-checkout",
-  "version": "1.0.9",
+  "version": "1.0.11",
   "description": "PaymentIQ WooCommerce plugin",
   "main": "index.js",
   "scripts": {
@@ -30,7 +30,7 @@
     ]
   },
   "dependencies": {
-    "paymentiq-cashier-bootstrapper": "1.3.5"
+    "paymentiq-cashier-bootstrapper": "1.3.11"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
