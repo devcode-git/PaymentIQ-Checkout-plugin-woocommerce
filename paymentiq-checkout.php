@@ -7,7 +7,7 @@
  Plugin Name: PaymentIQ Checkout
  Plugin URI: https://docs.paymentiq.io/
  Description: PaymentIQ Checkout for Woocommerce
- Version: 1.0.11
+ Version: 1.1.0
  Author: PaymentIQ/Bambora
  Author URI: https://www.bambora.com/payment-for-gaming/paymentiq/
  License: GPLv2 or later
@@ -108,6 +108,7 @@ function initPIQCheckout () {
       $this->didClientId = $this->get_option( 'didClientId' );
       $this->piqCountry = strval($this->get_option( 'piqCountry' ));
       $this->piqLocale = strval($this->get_option( 'piqLocale' ));
+      $this->piqExcludeIdentifyFields = strval($this->get_option( 'piqExcludeIdentifyFields' ));
       $this->piqEnvironment = strval($this->get_option( 'piqEnvironment' ));
       $this->piqButtonsColor = strval($this->get_option( 'piqButtonsColor' ));
       $this->rememberUserDevice = strval($this->get_option( 'rememberUserDevice' ));
