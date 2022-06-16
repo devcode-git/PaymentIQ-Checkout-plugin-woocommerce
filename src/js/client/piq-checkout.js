@@ -42,10 +42,14 @@ function setupCheckout (payload) {
   const buttonsColor = appConfig.buttonsColor
   delete appConfig.buttonsColor
 
+  const excludeIdentifyFields = appConfig.excludeIdentifyFields
+  delete appConfig.excludeIdentifyFields
+
   const lookupConfig = {
     didClientId,
     country: country,
     identifyFields: 'zip,email',
+    excludeIdentifyFields: excludeIdentifyFields,
     environment: appConfig.environment,
     checkUserDevice: checkDeviceId,
     owner: 'Santander',

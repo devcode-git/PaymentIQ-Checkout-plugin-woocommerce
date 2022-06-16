@@ -91,6 +91,11 @@ class Piq_Co_Utils {
 		echo PIQ_CHECKOUT_WC()->piqButtonsColor;
 	}
 
+	public static function getExcludeIdentifyFields() {
+		$instance = PIQ_CHECKOUT_WC();
+		echo $instance->piqExcludeIdentifyFields != '' ? $instance->piqExcludeIdentifyFields : strval('');
+	}
+
 	// Return an iso 2 letter country code
 	public static function getSelectedCountry() {
 		$instance = PIQ_CHECKOUT_WC();

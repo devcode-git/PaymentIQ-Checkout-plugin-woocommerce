@@ -82,6 +82,12 @@ class Piq_Co_Setup {
           'fi_FI' => 'Finnish (fi_FI)',
         )
       ),
+      'piqExcludeIdentifyFields' => array(
+        'title' => 'Exclude Fields',
+        'type' => 'text',
+        'description' => 'Comma-separated list of field IDs to exclude',
+        'default' => ''
+      ),
       'piqEnvironment' => array(
         'title' => 'Environment',
         'type' => 'select',
