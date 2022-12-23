@@ -237,6 +237,9 @@ function initPIQCheckout () {
         if($this->captureOnStatusComplete === 'yes') {
           add_action( 'woocommerce_order_status_completed', array( $this, 'paymentiq_checkout_order_status_completed' ) );
         }
+        
+        add_filter( 'woocommerce_admin_order_should_render_refunds', array( $this, 'paymentiq_should_render_refund' ) );
+
       }
       
       /* Hook when a woo order is cancelled - if the order has a piqTxId - do a void (cancel in PIQ) */
@@ -245,6 +248,15 @@ function initPIQCheckout () {
       /* When we receive a txStatus from PIQ Checkout
          This is a self-triggered action when the PaymentIQ cashier gets the success-callback */
       add_action( 'piq_co_handle_transaction_status_update', array( $this, 'handle_transaction_status_update' ) );
+    }
+
+    function paymentiq_should_render_refund () {
+      global $post;
+      $order_id = $post->ID;
+      $order = wc_get_order( $order_id );
+      $order_completed = in_array( $order->get_status(), array( 'completed' ), true );
+      $render_refunds = 0 < $order->get_total() - $order->get_total_refunded() || 0 < absint( $order->get_item_count() - $order->get_item_count_refunded()) && !$order_completed;
+      return $render_refunds;
     }
 
     /*
