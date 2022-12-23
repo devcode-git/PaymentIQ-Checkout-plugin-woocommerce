@@ -255,7 +255,7 @@ function initPIQCheckout () {
       $order_id = $post->ID;
       $order = wc_get_order( $order_id );
       $order_completed = in_array( $order->get_status(), array( 'completed' ), true );
-      $render_refunds = 0 < $order->get_total() - $order->get_total_refunded() || 0 < absint( $order->get_item_count() - $order->get_item_count_refunded()) && !$order_completed;
+      $render_refunds = (0 < $order->get_total() - $order->get_total_refunded() || 0 < absint( $order->get_item_count() - $order->get_item_count_refunded())) && $order_completed;
       return $render_refunds;
     }
 
